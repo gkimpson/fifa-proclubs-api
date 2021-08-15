@@ -8,83 +8,53 @@ use Illuminate\Support\Facades\Http;
 class StatsController extends Controller
 {
     public $apiUrl = 'https://proclubs.ea.com/api/fifa/';
-    public $referrer = 'https://www.ea.com/';
+    public $referer = 'https://www.ea.com/';
 
     public function index()
     {
         
     }
 
-    public function test()
-    {
-        // curl 'https://proclubs.ea.com/api/fifa/clubs/matches?platform=ps4&clubIds=1741008&matchType=gameType13&maxResultCount=1' \
-        // -H 'Connection: keep-alive' \
-        // -H 'sec-ch-ua: "Chromium";v="92", " Not A;Brand";v="99", "Google Chrome";v="92"' \
-        // -H 'accept: application/json' \
-        // -H 'sec-ch-ua-mobile: ?0' \
-        // -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36' \
-        // -H 'Origin: https://www.ea.com' \
-        // -H 'Sec-Fetch-Site: same-site' \
-        // -H 'Sec-Fetch-Mode: cors' \
-        // -H 'Sec-Fetch-Dest: empty' \
-        // -H 'Referer: https://www.ea.com/' \
-        // -H 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8' \
-        // --compressed        
-        // $url = $this->apiUrl . 'clubs/info';
-        // $url = 'https://proclubs.ea.com/api/fifa/clubs/info?';
-        $url = 'https://proclubs.ea.com/api/fifa/clubs/matches?platform=ps4&clubIds=1741008&matchType=gameType13&maxResultCount=1';
-        $params = [
-            'platform' => 'ps4',
-            'clubIds' => 1741008,
-        ];
-
-        $response = Http::withHeaders([
-            'Referrer' => 'https://www.ea.com/',
-            'Origin' => 'https://www.ea.com'
-        ])->get($url)->body();   
-        dd($response);
-    }
-
-    public function clubsInfo()
+    public function clubsInfo(Request $request)
     {
         $endpoint = "clubs/info?";
         $params = [
-            'platform' => 'ps4',
-            'clubIds' => 1741008
-        ];        
-        $this->doCurl($endpoint, $params);
+            'platform' => $request->input('platform'),
+            'clubIds' => $request->input('clubId') 
+        ];      
+        return $this->doExternalApiCall($endpoint, $params);
     }
 
-    public function careerStats()
+    public function careerStats(Request $request)
     {
         $endpoint = "members/career/stats?";
         $params = [
-            'platform' => 'ps4',
-            'clubId' => 1741008
-        ];        
-        $this->doCurl($endpoint, $params);
+            'platform' => $request->input('platform'),
+            'clubId' => $request->input('clubId') 
+        ];    
+        return $this->doExternalApiCall($endpoint, $params);
     }
 
-    public function memberStats()
+    public function memberStats(Request $request)
     {
         $endpoint = "members/stats?";
         $params = [
-            'platform' => 'ps4',
-            'clubId' => 1741008
+            'platform' => $request->input('platform'),
+            'clubId' => $request->input('clubId') 
         ];        
-        $this->doCurl($endpoint, $params);
+        return $this->doExternalApiCall($endpoint, $params);
     }
 
-    public function matchStats()
+    public function matchStats(Request $request)
     {
         $endpoint = "clubs/matches?";
         $params = [
-            'matchType' => 'gameType13',
-            'platform' => 'ps4',
-            'clubIds' => 1741008
+            'matchType' => $request->input('matchType'),    // gameType13
+            'platform' => $request->input('platform'),      // ps4
+            'clubIds' => $request->input('clubIds')         // 1741008
         ];
  
-        $this->doCurl($endpoint, $params);
+        return $this->doExternalApiCall($endpoint, $params);
     }
 
     public function search()
@@ -92,7 +62,13 @@ class StatsController extends Controller
 
     }
 
-    public function doCurl($endpoint = null, $params = [])
+    private function doExternalApiCall($endpoint = null, $params = null)
+    {
+        $url = $this->apiUrl . $endpoint . http_build_query($params);
+        return Http::withHeaders(['Referer' => $this->referer])->get($url)->json();      
+    }
+
+    private function doCurl($endpoint = null, $params = [])
     {
         $url = $this->apiUrl . $endpoint . http_build_query($params);
 
