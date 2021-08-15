@@ -15,162 +15,76 @@ class StatsController extends Controller
         
     }
 
-    public function LARAVELclubsInfo()
+    public function test()
     {
-        $url = $this->apiUrl . 'clubs/info';
-        $url = 'https://proclubs.ea.com/api/fifa/clubs/info';
-        $url = 'https://proclubs.ea.com/api/fifa/clubs/matches?platform=ps4&clubIds=1741008&matchType=gameType9&maxResultCount=1';
+        // curl 'https://proclubs.ea.com/api/fifa/clubs/matches?platform=ps4&clubIds=1741008&matchType=gameType13&maxResultCount=1' \
+        // -H 'Connection: keep-alive' \
+        // -H 'sec-ch-ua: "Chromium";v="92", " Not A;Brand";v="99", "Google Chrome";v="92"' \
+        // -H 'accept: application/json' \
+        // -H 'sec-ch-ua-mobile: ?0' \
+        // -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36' \
+        // -H 'Origin: https://www.ea.com' \
+        // -H 'Sec-Fetch-Site: same-site' \
+        // -H 'Sec-Fetch-Mode: cors' \
+        // -H 'Sec-Fetch-Dest: empty' \
+        // -H 'Referer: https://www.ea.com/' \
+        // -H 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8' \
+        // --compressed        
+        // $url = $this->apiUrl . 'clubs/info';
+        // $url = 'https://proclubs.ea.com/api/fifa/clubs/info?';
+        $url = 'https://proclubs.ea.com/api/fifa/clubs/matches?platform=ps4&clubIds=1741008&matchType=gameType13&maxResultCount=1';
         $params = [
             'platform' => 'ps4',
             'clubIds' => 1741008,
-            'matchType' => 'gameType9',
-            'maxResultCount' => 1
         ];
 
         $response = Http::withHeaders([
             'Referrer' => 'https://www.ea.com/',
-        ])->get($url, $params);   
+            'Origin' => 'https://www.ea.com'
+        ])->get($url)->body();   
         dd($response);
     }
 
     public function clubsInfo()
     {
-        $curl = curl_init();
-
-        $platform = 'ps4';
-        $clubId = 1741008;
-        $url = "https://proclubs.ea.com/api/fifa/clubs/info?platform={$platform}&clubIds={$clubId}";
-
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => $url,
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'GET',
-          CURLOPT_HTTPHEADER => array(
-            'Referer: https://www.ea.com/'
-          ),
-        ));
-        
-        $response = curl_exec($curl);
-        
-        curl_close($curl);
-        echo $response;
-        
+        $endpoint = "clubs/info?";
+        $params = [
+            'platform' => 'ps4',
+            'clubIds' => 1741008
+        ];        
+        $this->doCurl($endpoint, $params);
     }
 
     public function careerStats()
     {
-        $curl = curl_init();
-        $platform = 'ps4';
-        $clubId = 1741008;
-        $url = "https://proclubs.ea.com/api/fifa/members/career/stats?platform={$platform}&clubId={$clubId}";        
-
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => $url,
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'GET',
-          CURLOPT_HTTPHEADER => array(
-            'Referer: https://www.ea.com/'
-          ),
-        ));
-        
-        $response = curl_exec($curl);
-        
-        curl_close($curl);
-        echo $response;
+        $endpoint = "members/career/stats?";
+        $params = [
+            'platform' => 'ps4',
+            'clubId' => 1741008
+        ];        
+        $this->doCurl($endpoint, $params);
     }
 
     public function memberStats()
     {
-        $curl = curl_init();
-        $platform = 'ps4';
-        $clubId = 1741008;
-        $url = "https://proclubs.ea.com/api/fifa/members/stats?platform={$platform}&clubId={$clubId}";         
-
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => $url,
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'GET',
-          CURLOPT_HTTPHEADER => array(
-            'Referer: https://www.ea.com/',
-          ),
-        ));
-        
-        $response = curl_exec($curl);
-        
-        curl_close($curl);
-        echo $response;
-    }
-
-    public function seasonalStats()
-    {
-        $curl = curl_init();
-        $platform = 'ps4';
-        $clubId = 1741008;
-        $gameType = 13;
-        $matchType = 13;
-        $url = "https://proclubs.ea.com/api/fifa/clubs/info?platform={$platform}&clubIds={$clubId}&gameType={$gameType}&matchType={$matchType}";       
-
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => $url,
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'GET',
-          CURLOPT_HTTPHEADER => array(
-            'Referer: https://www.ea.com/',
-          ),
-        ));
-        
-        $response = curl_exec($curl);
-        
-        curl_close($curl);
-        echo $response;
+        $endpoint = "members/stats?";
+        $params = [
+            'platform' => 'ps4',
+            'clubId' => 1741008
+        ];        
+        $this->doCurl($endpoint, $params);
     }
 
     public function matchStats()
     {
-        $curl = curl_init();
-        $platform = 'ps4';
-        $matchType = 'gameType13';
-        $clubIds = 1741008;
-        $url = "https://proclubs.ea.com/api/fifa/clubs/matches?matchType={$matchType}&platform={$platform}&clubIds={$clubIds}";
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-              'Referer: https://www.ea.com/'
-            ),
-          ));
-          
-          $response = curl_exec($curl);
-          
-          curl_close($curl);
-          echo $response;
+        $endpoint = "clubs/matches?";
+        $params = [
+            'matchType' => 'gameType13',
+            'platform' => 'ps4',
+            'clubIds' => 1741008
+        ];
+ 
+        $this->doCurl($endpoint, $params);
     }
 
     public function search()
@@ -178,9 +92,10 @@ class StatsController extends Controller
 
     }
 
-    public function doCurl($endpoint)
+    public function doCurl($endpoint = null, $params = [])
     {
-        $url = $this->apiUrl . $endpoint;
+        $url = $this->apiUrl . $endpoint . http_build_query($params);
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
