@@ -74,6 +74,9 @@ class StatsController extends Controller
         return $this->doExternalApiCall($endpoint, $params);
     }
 
+    /**
+     * check valid platform has been added to request
+     */
     private function checkValidPlatform($platform = null)
     {
         if (!in_array($platform, self::PLATFORMS)) {
@@ -89,6 +92,9 @@ class StatsController extends Controller
         return Http::withHeaders(['Referer' => $this->referer])->get($url)->json();      
     }
 
+    /** 
+     * @deprecated
+     */
     private function doCurl($endpoint = null, $params = [])
     {
         $url = $this->apiUrl . $endpoint . http_build_query($params);
