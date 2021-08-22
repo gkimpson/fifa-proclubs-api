@@ -27,7 +27,7 @@ class StatsController extends Controller
         $endpoint = 'clubs/info?';
         $params = [
             'platform' => $this->checkValidPlatform($request->input('platform')),
-            'clubIds' => $request->input('clubId') 
+            'clubIds' => $request->input('clubIds') 
         ];      
         return $this->doExternalApiCall($endpoint, $params);
     }
@@ -40,6 +40,16 @@ class StatsController extends Controller
             'clubId' => $request->input('clubId')
         ];    
         return $this->doExternalApiCall($endpoint, $params);
+    }
+
+    public function seasonstats(Request $request)
+    {
+        $endpoint = 'clubs/seasonalStats?';
+        $params = [
+            'platform' => $this->checkValidPlatform($request->input('platform')),
+            'clubIds' => $request->input('clubIds')
+        ];    
+        return $this->doExternalApiCall($endpoint, $params);        
     }
 
     public function memberStats(Request $request)
@@ -56,7 +66,7 @@ class StatsController extends Controller
     {
         $endpoint = 'clubs/matches?';
         $params = [
-            'matchType' => $request->input('matchType'),                            // e.g gameType13
+            'matchType' => $request->input('matchType'),                            // e.g (gameType13 = Drop-in match, gameType9 = Cup matches)
             'platform' => $this->checkValidPlatform($request->input('platform')),   // e.g ps4
             'clubIds' => $request->input('clubIds')                                 // e.g 1741008
         ];
@@ -74,6 +84,30 @@ class StatsController extends Controller
         return $this->doExternalApiCall($endpoint, $params);
     }
 
+    public function settings()
+    {
+        $endpoint = 'settings?';
+        return $this->doExternalApiCall($endpoint);        
+    }
+
+    public function seasonalLeaderboard(Request $request)
+    {
+        $endpoint = 'seasonRankLeaderboard?';
+        $params = [
+            'platform' => $this->checkValidPlatform($request->input('platform'))
+        ];            
+        return $this->doExternalApiCall($endpoint, $params);          
+    }
+
+    public function clubLeaderboard(Request $request)
+    {
+        $endpoint = 'clubRankLeaderboard?';
+        $params = [
+            'platform' => $this->checkValidPlatform($request->input('platform'))
+        ];            
+        return $this->doExternalApiCall($endpoint, $params);          
+    }
+
     /**
      * check valid platform has been added to request
      */
@@ -86,7 +120,7 @@ class StatsController extends Controller
         return $platform;
     }
 
-    private function doExternalApiCall($endpoint = null, $params = null)
+    private function doExternalApiCall($endpoint = null, $params = [])
     {
         $url = $this->apiUrl . $endpoint . http_build_query($params);
         return Http::withHeaders(['Referer' => $this->referer])->get($url)->json();      

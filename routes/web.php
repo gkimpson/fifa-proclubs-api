@@ -20,4 +20,7 @@ Route::get('/memberstats', 'App\Http\Controllers\StatsController@memberStats');
 Route::get('/seasonstats', 'App\Http\Controllers\StatsController@seasonStats');
 Route::get('/matchstats', 'App\Http\Controllers\StatsController@matchStats');
 Route::get('/search', 'App\Http\Controllers\StatsController@search');
+Route::get('/settings', 'App\Http\Controllers\StatsController@settings');
+Route::get('/seasonleaderboard', 'App\Http\Controllers\StatsController@seasonalLeaderboard');
+Route::get('/clubleaderboard', 'App\Http\Controllers\StatsController@clubLeaderboard');
 Route::get('/test', 'App\Http\Controllers\StatsController@test');
