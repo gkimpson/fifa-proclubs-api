@@ -9,6 +9,13 @@ class StatsController extends Controller
 {
     public $apiUrl = 'https://proclubs.ea.com/api/fifa/';
     public $referer = 'https://www.ea.com/';
+    const PLATFORMS = [
+        'xbox-series-xs',
+        'xboxone',
+        'ps5',
+        'ps4',
+        'pc'
+    ];
 
     public function index()
     {
@@ -17,9 +24,9 @@ class StatsController extends Controller
 
     public function clubsInfo(Request $request)
     {
-        $endpoint = "clubs/info?";
+        $endpoint = 'clubs/info?';
         $params = [
-            'platform' => $request->input('platform'),
+            'platform' => $this->checkValidPlatform($request->input('platform')),
             'clubIds' => $request->input('clubId') 
         ];      
         return $this->doExternalApiCall($endpoint, $params);
@@ -27,19 +34,19 @@ class StatsController extends Controller
 
     public function careerStats(Request $request)
     {
-        $endpoint = "members/career/stats?";
+        $endpoint = 'members/career/stats?';
         $params = [
-            'platform' => $request->input('platform'),
-            'clubId' => $request->input('clubId') 
+            'platform' => $this->checkValidPlatform($request->input('platform')),
+            'clubId' => $request->input('clubId')
         ];    
         return $this->doExternalApiCall($endpoint, $params);
     }
 
     public function memberStats(Request $request)
     {
-        $endpoint = "members/stats?";
+        $endpoint = 'members/stats?';
         $params = [
-            'platform' => $request->input('platform'),
+            'platform' => $this->checkValidPlatform($request->input('platform')),
             'clubId' => $request->input('clubId') 
         ];        
         return $this->doExternalApiCall($endpoint, $params);
@@ -47,19 +54,33 @@ class StatsController extends Controller
 
     public function matchStats(Request $request)
     {
-        $endpoint = "clubs/matches?";
+        $endpoint = 'clubs/matches?';
         $params = [
-            'matchType' => $request->input('matchType'),    // gameType13
-            'platform' => $request->input('platform'),      // ps4
-            'clubIds' => $request->input('clubIds')         // 1741008
+            'matchType' => $request->input('matchType'),                            // e.g gameType13
+            'platform' => $this->checkValidPlatform($request->input('platform')),   // e.g ps4
+            'clubIds' => $request->input('clubIds')                                 // e.g 1741008
         ];
  
         return $this->doExternalApiCall($endpoint, $params);
     }
 
-    public function search()
+    public function search(Request $request)
     {
+        $endpoint = 'clubs/search?';
+        $params = [
+            'platform' => $this->checkValidPlatform($request->input('platform')),      
+            'clubName' => $request->input('clubName')       // e.g banterbury
+        ];           
+        return $this->doExternalApiCall($endpoint, $params);
+    }
 
+    private function checkValidPlatform($platform = null)
+    {
+        if (!in_array($platform, self::PLATFORMS)) {
+            abort(400, 'Invalid platform');
+        }
+        
+        return $platform;
     }
 
     private function doExternalApiCall($endpoint = null, $params = null)
