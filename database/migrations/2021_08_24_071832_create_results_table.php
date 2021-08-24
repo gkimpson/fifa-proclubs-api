@@ -15,13 +15,13 @@ class CreateResultsTable extends Migration
     {
         Schema::create('results', function (Blueprint $table) {
             $table->id();
-            $table->string('match_id');
+            $table->string('match_id')->unique();         // EA unique identifier
             $table->integer('home_team_id');
             $table->integer('away_team_id');
             $table->integer('home_team_goals');
             $table->integer('away_team_goals');
             $table->enum('outcome', ['homewin', 'awaywin', 'draw']);
-            $table->timestamp('date');
+            $table->timestamp('match_date');
             $table->json('properties')->nullable();
             $table->timestamps();
         });

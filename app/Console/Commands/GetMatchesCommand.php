@@ -44,6 +44,9 @@ class GetMatchesCommand extends Command
         $controller = new StatsController();
         $response = $controller->matchStats($request);
         $results = Result::formatData($response);
+        // dd($results);
+
+        $inserted = Result::insertUniqueMatches($results);
 
         //todo insert results into db, using the matchId as a unique identifier
         
