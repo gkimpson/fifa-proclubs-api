@@ -3,7 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\StatsController;
-use App\Models\Match;
+use App\Models\Result;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -43,7 +43,7 @@ class GetMatchesCommand extends Command
     {
         $controller = new StatsController();
         $response = $controller->matchStats($request);
-        $results = Match::formatData($response);
+        $results = Result::formatData($response);
 
         //todo insert results into db, using the matchId as a unique identifier
         

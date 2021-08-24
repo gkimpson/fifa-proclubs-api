@@ -21,7 +21,7 @@ class StatsController extends Controller
         'platform' => 'ps4',
         'clubId' => '1741008',
         'clubName' => 'Banterbury',
-        'matchType' => 'gameType13' // (gameType13 = cup, gameType9 = league)
+        'matchType' => 'gameType9' // (gameType13 = cup, gameType9 = league)
     ];
 
     public function index()

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 
-class Match extends Model
+class Result extends Model
 {
     use HasFactory;
 
