@@ -42,20 +42,11 @@ class GetMatchesCommand extends Command
     public function handle(Request $request)
     {
         $controller = new StatsController();
+        $this->info('Collecting matches data from the EA API');
         $response = $controller->matchStats($request);
         $results = Result::formatData($response);
-        // dd($results);
-
         $inserted = Result::insertUniqueMatches($results);
-
-        //todo insert results into db, using the matchId as a unique identifier
-        
-        // $this->info($m);
-        // $this->info(json_encode($response)); 
-
-        // $this->info('Collected matches data from the API');
-        // Log::info('from the command');
-
+        $this->info("{$inserted} results into the database");
         return 0;
     }
 }

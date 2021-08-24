@@ -61,6 +61,7 @@ class Result extends Model
 
     static function insertUniqueMatches($matches)
     {
+        $inserted = 0;
         // return dd($results[0]['matchId']);
         foreach ($matches as $match) {
             // check if existing match already exists in the db, if so don't re-insert this
@@ -80,10 +81,14 @@ class Result extends Model
                 ];
                 
                 // DB::enableQueryLog();
-                $result = Result::create($data);
+                if (Result::create($data)) {
+                    $inserted++;
+                }
                 // dd(DB::getQueryLog());                          
             }
         }
+
+        return $inserted;
     }
 
     /**
