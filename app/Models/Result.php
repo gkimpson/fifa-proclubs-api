@@ -14,7 +14,7 @@ class Result extends Model
 
     protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties'];
 
-    static function formatData($data)
+    public static function formatData($data)
     {   
         $collection = collect($data);
         $results = [];
@@ -24,13 +24,15 @@ class Result extends Model
                 'matchId' => $value['matchId'],
                 'timestamp' => $value['timestamp'],
                 'clubs' => self::getClubsData($value['clubs']),
+                'players' => self::getPlayerData($value['players'])
             ];
         }
 
         return collect($results);
     }
 
-    static function getClubsData($clubs) {
+    private static function getClubsData($clubs) 
+    {
         $clubs = collect($clubs)->values();
         $data = [];
 
@@ -59,16 +61,55 @@ class Result extends Model
         return $data;
     }
 
-    static function insertUniqueMatches($matches)
+    private static function getPlayerData($players)
+    {
+        $players = collect($players);
+        
+        foreach ($players as $clubId => $clubPlayer) {
+            // loop through each player(s) for each club
+            foreach ($players[$clubId] as $clubPlayer) {
+                $data[$clubId][] = [
+                    'assists' => $clubPlayer['assists'],
+                    'cleansheetsany' => $clubPlayer['cleansheetsany'],
+                    'cleansheetsdef' => $clubPlayer['cleansheetsdef'],
+                    'cleansheetsgk' => $clubPlayer['cleansheetsgk'],
+                    'goals' => $clubPlayer['goals'],
+                    'goalsconceded' => $clubPlayer['goalsconceded'],
+                    'losses' => $clubPlayer['losses'],
+                    'losses' => $clubPlayer['mom'],
+                    'passattempts' => $clubPlayer['passattempts'],
+                    'passesmade' => $clubPlayer['passesmade'],
+                    'pos' => $clubPlayer['pos'],
+                    'passesmade' => $clubPlayer['passesmade'],
+                    'realtimegame' => $clubPlayer['realtimegame'],
+                    'realtimeidle' => $clubPlayer['realtimeidle'],
+                    'redcards' => $clubPlayer['redcards'],
+                    'saves' => $clubPlayer['saves'],
+                    'SCORE' => $clubPlayer['SCORE'],
+                    'shots' => $clubPlayer['shots'],
+                    'tackleattempts' => $clubPlayer['tackleattempts'],
+                    'tacklesmade' => $clubPlayer['tacklesmade'],
+                    'vproattr' => self::getProAttributes($clubPlayer['vproattr']),
+                    'vprohackreason' => $clubPlayer['vprohackreason'],
+                    'wins' => $clubPlayer['wins'],
+                    'playername' => $clubPlayer['playername'],
+                    'properties' => $clubPlayer
+                ];                
+            }
+        }
+
+        return $data;
+    }
+
+    public static function insertUniqueMatches($matches)
     {
         $inserted = 0;
-        // return dd($results[0]['matchId']);
         foreach ($matches as $match) {
             // check if existing match already exists in the db, if so don't re-insert this
             if (Result::where('match_id', '=', $match['matchId'])->doesntExist()) {
                 $carbonDate = Carbon::now();
                 $carbonDate->timestamp($match['timestamp']);
-                
+
                 $data = [
                     'match_id' => $match['matchId'],
                     'home_team_id' => $match['clubs'][0]['id'],
@@ -77,7 +118,10 @@ class Result extends Model
                     'away_team_goals' => $match['clubs'][1]['goals'],
                     'outcome' => self::getMatchOutcome($match['clubs'][0]),
                     'match_date' => $carbonDate->format('Y-m-d H:i:s'),
-                    'properties' => json_encode($match)
+                    'properties' => json_encode([
+                        'clubs' => $match['clubs'],
+                        'players' => $match['players']
+                    ])
                 ];
                 
                 // DB::enableQueryLog();
@@ -96,7 +140,7 @@ class Result extends Model
      * @clubData array
      * @return $outcome - home win, away win or draw
      */
-    static function getMatchOutcome($clubData)
+    private static function getMatchOutcome($clubData)
     {
         if ($clubData['wins'] == 1) {
             $outcome = 'homewin';
@@ -107,6 +151,11 @@ class Result extends Model
         }
 
         return $outcome;
+    }
+
+    private static function getProAttributes($attributes)
+    {
+        return $attributes;
     }
 
 }

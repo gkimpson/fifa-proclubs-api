@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Artisan;
 
 class StatsController extends Controller
 {
@@ -138,6 +139,12 @@ class StatsController extends Controller
         $url = $this->apiUrl . $endpoint . http_build_query($params);
         return Http::withHeaders(['Referer' => $this->referer])->get($url)->json();      
     }
+
+    public function runCommand()
+    {
+        Artisan::call('matches:get');
+    }
+
 
     /** 
      * @deprecated

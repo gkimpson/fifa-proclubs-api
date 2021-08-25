@@ -46,7 +46,7 @@ class GetMatchesCommand extends Command
         $response = $controller->matchStats($request);
         $results = Result::formatData($response);
         $inserted = Result::insertUniqueMatches($results);
-        $this->info("{$inserted} results into the database");
+        $this->info("{$inserted} unique results into the database");
         return 0;
     }
 }
