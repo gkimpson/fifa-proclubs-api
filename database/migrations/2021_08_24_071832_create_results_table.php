@@ -22,6 +22,7 @@ class CreateResultsTable extends Migration
             $table->integer('away_team_goals');
             $table->enum('outcome', ['homewin', 'awaywin', 'draw']);
             $table->timestamp('match_date');
+            $table->unsignedInteger('platform_id');
             $table->json('properties')->nullable();
             $table->timestamps();
         });
