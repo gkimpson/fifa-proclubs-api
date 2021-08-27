@@ -15,7 +15,7 @@ class GetMatchesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'matches:get';
+    protected $signature = 'proclubsapi:matches';
 
     /**
      * The console command description.
