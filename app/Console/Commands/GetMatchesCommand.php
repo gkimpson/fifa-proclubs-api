@@ -42,40 +42,45 @@ class GetMatchesCommand extends Command
      */
     public function handle(Request $request)
     {
-        $controller = new StatsController();
+        try {
+            $controller = new StatsController();
 
-        $results = [];
-        $properties = User::pluck('properties')->unique();
-        $this->info("{$properties->count()} user clubId/platform combinations found");
-        
-        $x = 0;
-        foreach ($properties as $property) {
-            $this->info("Collecting matches data from the EA API - [{$x}]");
+            $results = [];
+            $properties = User::pluck('properties')->unique();
+            $this->info("{$properties->count()} user clubId/platform combinations found");
             
-            $params = [
-                'matchType' => 'gameType13',
-                'platform' => $property->platform,
-                'clubIds' => $property->clubId 
-            ];
-
-            $response = $controller->matchStats($request, $params);
-            $results_1 = Result::formatData($response);
-            $params = [
-                'matchType' => 'gameType9',
-                'platform' => $property->platform,
-                'clubIds' => $property->clubId 
-            ];
-
-            $response = $controller->matchStats($request, $params);
-            $results_2 = Result::formatData($response);
-
-            $results = array_merge($results_1->toArray(), $results_2->toArray());
-            $inserted = Result::insertUniqueMatches($results, $property->platform);
-            $this->info("{$inserted} unique results into the database");
-            $x++;
+            $x = 0;
+            foreach ($properties as $property) {
+                $this->info("Collecting matches data for - {$property->platform}/{$property->clubId} : [{$x}]");
+                
+                $params = [
+                    'matchType' => 'gameType13',
+                    'platform' => $property->platform,
+                    'clubIds' => $property->clubId 
+                ];
+    
+                $response = $controller->matchStats($request, $params);
+                $results_1 = Result::formatData($response);
+                $params = [
+                    'matchType' => 'gameType9',
+                    'platform' => $property->platform,
+                    'clubIds' => $property->clubId 
+                ];
+    
+                $response = $controller->matchStats($request, $params);
+                $results_2 = Result::formatData($response);
+    
+                $results = array_merge($results_1->toArray(), $results_2->toArray());
+                $inserted = Result::insertUniqueMatches($results, $property->platform);
+                $this->info("{$inserted} unique results into the database");
+                $x++;
+            }
+    
+            return 0;
+        } catch (\Exception $e) {
+            // do some logging...
+            return false;
         }
-
-        return 0;
     }
 
     public function OLDhandle(Request $request)
