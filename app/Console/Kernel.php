@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
         //          ->appendOutputTo(storage_path().'/logs/laravel_output.log');
         // $schedule->command('roclubsapi:matches')->everyMinute()->appendOutputTo(storage_path().'/logs/laravel.log');
 
-        $schedule->command('proclubsapi:matches')->everyMinute();
+        $schedule->command('proclubsapi:matches')->everyFifteenMinutes();
     }
 
     /**
