@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Http\Controllers\StatsController;
 use App\Models\Club;
 use App\Models\User;
+use App\Models\Result;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -46,7 +47,20 @@ class GetClubsCommand extends Command
         $this->info('Collecting club data from the EA API');
         $response = $controller->clubsInfo($request);
         $clubs = Club::formatData($response);
-        // dd($clubs);
+
+        
+        // gametype9, gameType13
+        $results = [];
+        $properties = User::where('id', '=', 1)->pluck('properties')->unique();
+
+        foreach ($properties as $item) {
+            $results['league'][] = Result::getApiResults($item->clubId, $item->platform, 'gameType9');
+            $results['cup'][] = Result::getApiResults($item->clubId, $item->platform, 'gameType13');
+        }
+        
+        // dd($results['league'][0]);
+        dd('--');        
+
 
         // $u = User::find(1);
         // $props = [

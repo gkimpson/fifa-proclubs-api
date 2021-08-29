@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Artisan;
+use App\Models\User;
 
 class Result extends Model
 {
@@ -33,29 +37,26 @@ class Result extends Model
 
     private static function getClubsData($clubs) 
     {
-        $clubs = collect($clubs)->values();
+        $clubs = collect($clubs);
         $data = [];
 
-        for($x = 0; $x < 2; $x++) {
-            $seasonId = isset($clubs[$x]['season_id']) ? $clubs[$x]['season_id'] : null;
+        foreach($clubs as $clubId => $club) {
+            $seasonId = isset($clubs[$clubId]['season_id']) ? $clubs[$clubId]['season_id'] : null;
 
-            if (isset($clubs[$x])) {
-                $data[$x] = [
-                    'id' => isset($clubs[$x]['details']['clubId']) ? $clubs[$x]['details']['clubId'] : null,
-                    'name' => isset($clubs[$x]['details']['name']) ? $clubs[$x]['details']['name'] : null,
-                    'goals' => $clubs[$x]['goals'],
-                    'goalsAgainst' => $clubs[$x]['goalsAgainst'],
+                $data[$clubId] = [
+                    'id' => $clubId,
+                    'name' => isset($clubs[$clubId]['details']['name']) ? $clubs[$clubId]['details']['name'] : null,
+                    'goals' => $clubs[$clubId]['goals'],
+                    'goalsAgainst' => $clubs[$clubId]['goalsAgainst'],
                     'seasonId' => $seasonId,
-                    'winnerByDnf' => $clubs[$x]['winnerByDnf'],
-                    'wins' => $clubs[$x]['wins'],
-                    'losses' => $clubs[$x]['losses'],
-                    'ties' => $clubs[$x]['ties'],
-                    'gameNumber' => $clubs[$x]['gameNumber'], 
-                    'result' => $clubs[$x]['result'], 
-                    'teamId' => isset($clubs[$x]['details']['teamId']) ? $clubs[$x]['details']['teamId'] : null,
+                    'winnerByDnf' => $clubs[$clubId]['winnerByDnf'],
+                    'wins' => $clubs[$clubId]['wins'],
+                    'losses' => $clubs[$clubId]['losses'],
+                    'ties' => $clubs[$clubId]['ties'],
+                    'gameNumber' => $clubs[$clubId]['gameNumber'], 
+                    'result' => $clubs[$clubId]['result'], 
+                    'teamId' => isset($clubs[$clubId]['details']['teamId']) ? $clubs[$clubId]['details']['teamId'] : null,
                 ];
-            }
-
         }
 
         return $data;
@@ -101,7 +102,7 @@ class Result extends Model
         return $data;
     }
 
-    public static function insertUniqueMatches($matches)
+    public static function insertUniqueMatches($matches, $platform = null)
     {
         $inserted = 0;
         foreach ($matches as $match) {
@@ -110,19 +111,21 @@ class Result extends Model
                 $carbonDate = Carbon::now();
                 $carbonDate->timestamp($match['timestamp']);
 
+                $clubs = collect($match['clubs'])->values();
+
                 $data = [
                     'match_id' => $match['matchId'],
-                    'home_team_id' => $match['clubs'][0]['id'],
-                    'away_team_id' => $match['clubs'][1]['id'],
-                    'home_team_goals' => $match['clubs'][0]['goals'],
-                    'away_team_goals' => $match['clubs'][1]['goals'],
-                    'outcome' => self::getMatchOutcome($match['clubs'][0]),
+                    'home_team_id' => $clubs[0]['id'],
+                    'away_team_id' => $clubs[1]['id'],
+                    'home_team_goals' => $clubs[0]['goals'],
+                    'away_team_goals' => $clubs[1]['goals'],
+                    'outcome' => self::getMatchOutcome($clubs[0]),
                     'match_date' => $carbonDate->format('Y-m-d H:i:s'),
                     'properties' => json_encode([
                         'clubs' => $match['clubs'],
                         'players' => $match['players']
                     ]),
-                    'platform_id' => 1 // todo make this dynamic
+                    'platform_id' => $platform
                 ];
                 
                 // DB::enableQueryLog();
@@ -157,6 +160,19 @@ class Result extends Model
     private static function getProAttributes($attributes)
     {
         return $attributes;
+    }
+
+    public static function getApiResults($clubId, $platform, $gameType = 'gameType9')
+    {
+        $endpoint = 'clubs/matches?';
+        $params = [
+            'matchType' => $gameType,
+            'platform' => $platform,
+            'clubIds' => $clubId
+        ];
+        $referer = 'https://www.ea.com/';
+        $url = 'https://proclubs.ea.com/api/fifa/' . $endpoint . http_build_query($params);
+        return Http::withHeaders(['Referer' => $referer])->get($url)->json();
     }
 
 }

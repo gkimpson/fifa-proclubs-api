@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Artisan;
+use App\Models\User;
 
 class StatsController extends Controller
 {
@@ -73,14 +74,18 @@ class StatsController extends Controller
         return $this->doExternalApiCall($endpoint, $params);
     }
 
-    public function matchStats(Request $request)
+    public function matchStats(Request $request, $cliParams = null)
     {
         $endpoint = 'clubs/matches?';
         $params = [
             'matchType' => ($request->has('matchType')) ? $request->input('matchType') : self::MYCLUB_DEFAULTS['matchType'],
             'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : self::MYCLUB_DEFAULTS['platform'],
             'clubIds' => ($request->has('clubIds')) ? $request->input('clubIds') : self::MYCLUB_DEFAULTS['clubId']
-        ];          
+        ];
+
+        if ($cliParams) {
+            $params = $cliParams;
+        }
  
         return $this->doExternalApiCall($endpoint, $params);
     }
@@ -141,7 +146,7 @@ class StatsController extends Controller
     }
 
     public function runCommand()
-    {
+    {   
         Artisan::call('matches:get');
     }
 

@@ -4,7 +4,10 @@
 			"path": "."
 		},
 		{
-			"path": "../proclubsui"
+			"path": "../queues-app"
+		},
+		{
+			"path": "../contest"
 		}
 	]
 }
