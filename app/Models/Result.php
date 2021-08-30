@@ -26,6 +26,7 @@ class Result extends Model
         
         return Result::where('home_team_id', '=', $properties['clubId'])
                     ->orWhere('away_team_id', '=', $properties['clubId'])
+                    ->orderBy('match_date', 'desc')
                     ->get();
     }
 
