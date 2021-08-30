@@ -18,6 +18,17 @@ class Result extends Model
 
     protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform_id'];
 
+    public static function getResults($properties)
+    {
+        if (!$properties['clubId']) {
+            abort(404, 'Missing clubId');
+        }
+        
+        return Result::where('home_team_id', '=', $properties['clubId'])
+                    ->orWhere('away_team_id', '=', $properties['clubId'])
+                    ->get();
+    }
+
     public static function formatData($data)
     {   
         $collection = collect($data);
@@ -43,9 +54,9 @@ class Result extends Model
         foreach($clubs as $clubId => $club) {
             $seasonId = isset($clubs[$clubId]['season_id']) ? $clubs[$clubId]['season_id'] : null;
 
-                $data[$clubId] = [
+                $data[] = [
                     'id' => $clubId,
-                    'name' => isset($clubs[$clubId]['details']['name']) ? $clubs[$clubId]['details']['name'] : null,
+                    'name' => isset($clubs[$clubId]['details']['name']) && (!empty($clubs[$clubId]['details']['name'])) ? $clubs[$clubId]['details']['name'] : 'TEAM DISBANDED',
                     'goals' => $clubs[$clubId]['goals'],
                     'goalsAgainst' => $clubs[$clubId]['goalsAgainst'],
                     'seasonId' => $seasonId,
