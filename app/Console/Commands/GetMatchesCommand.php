@@ -44,9 +44,13 @@ class GetMatchesCommand extends Command
     {
         try {
             $controller = new StatsController();
-
             $results = [];
             $properties = User::pluck('properties')->unique();
+
+            // $spinner = $this->spinner($properties->count());
+            // $spinner->setMessage('Loading...');
+            // $spinner->start();
+
             $this->info("{$properties->count()} user clubId/platform combinations found");
             
             $x = 0;
@@ -73,25 +77,15 @@ class GetMatchesCommand extends Command
                 $results = array_merge($results_1->toArray(), $results_2->toArray());
                 $inserted = Result::insertUniqueMatches($results, $property['platform']);
                 $this->info("{$inserted} unique results into the database");
+                // $spinner->advance();
                 $x++;
             }
     
+            // $spinner->finish();
             return 0;
         } catch (\Exception $e) {
             // do some logging...
             return false;
         }
     }
-
-    public function OLDhandle(Request $request)
-    {
-        $controller = new StatsController();
-        $this->info('Collecting matches data from the EA API');
-        $response = $controller->matchStats($request);
-        $results = Result::formatData($response);
-        $inserted = Result::insertUniqueMatches($results);
-
-        $this->info("{$inserted} unique results into the database");
-        return 0;
-    }    
 }
