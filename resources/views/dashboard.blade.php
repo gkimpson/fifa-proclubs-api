@@ -72,6 +72,7 @@
                                                 @php 
                                                     $p = json_decode($result->properties);
                                                     print($p->clubs[0]->name);
+                                                    // todo: fix this later so there isn't a need to json_decode this in blade
                                                 @endphp
                                             </p>
                                         </div>
@@ -95,7 +96,8 @@
                                             <p class="text-gray-900 whitespace-no-wrap text-right">
                                                 @php 
                                                     $p = json_decode($result->properties);
-                                                    print($p->clubs[1]->name);
+                                                    print($p->clubs[1]->name);  
+                                                    // todo: fix this later so there isn't a need to json_decode this in blade
                                                 @endphp
                                             </p>
                                         </div>

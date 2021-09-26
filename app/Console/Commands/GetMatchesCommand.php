@@ -52,7 +52,7 @@ class GetMatchesCommand extends Command
             // $spinner->start();
 
             $this->info("{$properties->count()} user clubId/platform combinations found");
-            
+
             $x = 0;
             foreach ($properties as $property) {
                 $this->info("Collecting matches data for - {$property['platform']}/{$property['clubId']} : [{$x}]");

@@ -32,5 +32,5 @@ class BaseController extends Controller
         } catch (\Throwable $th) {
             throw $th;
         }
-    }    
+    }
 }

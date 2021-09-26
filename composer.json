@@ -6,11 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+        "fabpot/goutte": "^4.0",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "icanhazstring/symfony-console-spinner": "^1.0",
         "laravel/framework": "^8.54",
         "laravel/tinker": "^2.5",
-        "staudenmeir/eloquent-json-relations": "^1.1"
+        "rahul900day/laravel-console-spinner": "^1.0",
+        "staudenmeir/eloquent-json-relations": "^1.1",
+        "weidner/goutte": "^2.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
