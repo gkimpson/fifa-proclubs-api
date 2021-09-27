@@ -100,31 +100,29 @@ class StatsController extends Controller
             'clubName' => ($request->has('clubName')) ? $request->input('clubName') : self::MYCLUB_DEFAULTS['clubName']
         ];
 
-        // $crestUrl = $this->overviewScrape($request, ['custom-crest-base-url']);
-        // if (!empty($crestUrl) && array_key_exists('0', $crestUrl)) {
-        //     $crestFullUrl = $crestUrl[0] . '21.png'; // need to check if this changes to 22 for fifa22
-        // }
-        
-        // dd($crestFullUrl);
         $items = $this->doExternalApiCall($endpoint, $params);
+    
         $validItems = [];
-        $urls = [];
-        // dump($items);
-        foreach($items as $clubId => $item) {
-            // $item[$clubId]['customCrestUrl'] = $this->getCustomCrestUrl($clubId, $params['platform']);
-            // $urls[$clubId] = $this->getCustomCrestUrl($clubId, $params['platform']);
+        foreach($items as $clubId => &$item) {
             if (array_key_exists('seasons', $item)) {
-                $validItems[$clubId] = $items;
+                if (array_key_exists('clubInfo', $item) && isset($item['clubInfo']['teamId'])) {
+                    $teamId = $item['clubInfo']['teamId'];
+                    $validItems[] = array(
+                        'item' => $item,
+                        'customCrestUrl' => "https://fifa21.content.easports.com/fifa/fltOnlineAssets/05772199-716f-417d-9fe0-988fa9899c4d/2021/fifaweb/crests/256x256/l{$teamId}.png",
+                    );
+                } else {
+                    $validItems[] = array(
+                        'item' => $item,
+                        'customCrestUrl' => "https://media.contentapi.ea.com/content/dam/ea/fifa/fifa-21/pro-clubs/common/pro-clubs/crest-default.png",
+                    );                    
+                }
+
             } else {
                 // team has yet to play a season so won't be a valid option
             }
         }
-
-        foreach ($validItems as $clubId => &$validItem) {
-            $urls[$clubId] = $this->getCustomCrestUrl($clubId, $params['platform']);
-        }
-
-        // dd($urls);
+        dd($validItems[0]['customCrestUrl'], $validItems[1]['customCrestUrl'], $validItems[2]['customCrestUrl'], $validItems[3]['customCrestUrl'], $validItems[4]['customCrestUrl']);
     }
 
     public function getCustomCrestUrl($clubId, $platformId)
