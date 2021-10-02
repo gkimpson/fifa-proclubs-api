@@ -140,11 +140,11 @@ class Result extends Model
                     'platform_id' => $platform
                 ];
                 
-                // DB::enableQueryLog();
+                DB::enableQueryLog();
                 if (Result::create($data)) {
                     $inserted++;
                 }
-                // dd(DB::getQueryLog());                          
+                dd(DB::getQueryLog());                          
             }
         }
 
