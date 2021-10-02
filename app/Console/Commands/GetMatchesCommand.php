@@ -65,6 +65,8 @@ class GetMatchesCommand extends Command
     
                 $response = $controller->matchStats($request, $params);
                 $results_1 = Result::formatData($response);
+                $this->info("Cup matches {$results_1->count()} matches found");
+
                 $params = [
                     'matchType' => 'gameType9',
                     'platform' => $property['platform'],
@@ -73,6 +75,7 @@ class GetMatchesCommand extends Command
     
                 $response = $controller->matchStats($request, $params);
                 $results_2 = Result::formatData($response);
+                $this->info("League matches {$results_2->count()} matches found");
     
                 $results = array_merge($results_1->toArray(), $results_2->toArray());
                 $inserted = Result::insertUniqueMatches($results, $property['platform']);
