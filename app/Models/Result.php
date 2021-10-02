@@ -141,8 +141,10 @@ class Result extends Model
                 ];
                 
                 // DB::enableQueryLog();
+                dump($data);
                 if (Result::create($data)) {
                     $inserted++;
+                    dump('inserted '. $match['matchId']);
                 }
                 // dd(DB::getQueryLog());                        
             }
