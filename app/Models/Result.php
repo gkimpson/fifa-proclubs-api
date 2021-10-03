@@ -141,13 +141,17 @@ class Result extends Model
                     'platform_id' => $platform
                 ];
                 
-                DB::enableQueryLog();
+                // DB::enableQueryLog();
                 dump($data);
-                if (Result::create($data)) {
+                // if (Result::create($data)) {
+                //     $inserted++;
+                //     dump('inserted matchId: '. $match['matchId']);
+                // }
+                $id = DB::table('results')->insertGetId($data);
+                if ($id) {
                     $inserted++;
-                    dump('inserted matchId: '. $match['matchId']);
                 }
-                dd(DB::getQueryLog());                        
+                // dd(DB::getQueryLog());                      
             }
         }
 
