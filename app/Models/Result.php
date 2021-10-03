@@ -118,6 +118,7 @@ class Result extends Model
     public static function insertUniqueMatches($matches, $platform = null)
     {
         $inserted = 0;
+        $failedToInsert = 0;
         foreach ($matches as $match) {
             // check if existing match already exists in the db, if so don't re-insert this
             if (Result::where('match_id', '=', $match['matchId'])->doesntExist()) {
@@ -143,14 +144,13 @@ class Result extends Model
                 
                 // DB::enableQueryLog();
                 dump($data);
-                // if (Result::create($data)) {
-                //     $inserted++;
-                //     dump('inserted matchId: '. $match['matchId']);
-                // }
-                $id = DB::table('results')->insertGetId($data);
-                if ($id) {
+                try {
+                    Result::create($data);
                     $inserted++;
-                }
+                    dump('inserted matchId: '. $match['matchId']);
+                 } catch (\Exception $e) {
+                    dd($e);
+                 }                
                 // dd(DB::getQueryLog());                      
             }
         }
