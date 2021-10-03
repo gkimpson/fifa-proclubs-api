@@ -144,10 +144,9 @@ class Result extends Model
                 // DB::enableQueryLog();
                 dump($data);
                 try {
-                    if (Result::create($data)) {
-                        $inserted++;
-                        dump('inserted matchId: '. $match['matchId']); // never see this on line but always on local
-                    } 
+                    Result::create($data);
+                    $inserted++;
+                    dump('inserted matchId: '. $match['matchId']); // never see this on line but always on local
                  } catch (\Exception $e) {
                     dd($e);
                  }
