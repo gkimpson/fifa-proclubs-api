@@ -16,7 +16,8 @@ class Result extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform_id'];
+    // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform_id'];
+    protected $guarded = [];
 
     public static function getResults($properties)
     {
@@ -141,10 +142,9 @@ class Result extends Model
                 ];
                 
                 // DB::enableQueryLog();
-                dump($data);
                 if (Result::create($data)) {
                     $inserted++;
-                    dump('inserted '. $match['matchId']);
+                    dump('inserted matchId: '. $match['matchId']);
                 }
                 // dd(DB::getQueryLog());                        
             }
