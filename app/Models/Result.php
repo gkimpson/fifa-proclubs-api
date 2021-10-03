@@ -124,7 +124,6 @@ class Result extends Model
             if (Result::where('match_id', '=', $match['matchId'])->doesntExist()) {
                 $carbonDate = Carbon::now();
                 $carbonDate->timestamp($match['timestamp']);
-
                 $clubs = collect($match['clubs'])->values();
 
                 $data = [
@@ -139,18 +138,19 @@ class Result extends Model
                         'clubs' => $match['clubs'],
                         'players' => $match['players']
                     ]),
-                    'platform_id' => $platform
+                    'platform' => $platform
                 ];
                 
                 // DB::enableQueryLog();
                 dump($data);
                 try {
-                    Result::create($data);
-                    $inserted++;
-                    dump('inserted matchId: '. $match['matchId']);
+                    if (Result::create($data)) {
+                        $inserted++;
+                        dump('inserted matchId: '. $match['matchId']); // never see this on line but always on local
+                    } 
                  } catch (\Exception $e) {
                     dd($e);
-                 }                
+                 }
                 // dd(DB::getQueryLog());                      
             }
         }
