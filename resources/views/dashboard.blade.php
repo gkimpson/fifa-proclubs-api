@@ -82,10 +82,18 @@
                                     <p class="text-gray-900 whitespace-no-wrap text-center">{{ $result->home_team_goals }}</p>
                                 </td>
                                 <td class="border-b border-gray-200 bg-white text-xs">
-                                    ID: {{ $result->match_id}}<br>
+                                    {{-- ID: {{ $result->match_id}}<br> --}}
                                     @isset($result->media)
-                                    <a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>Click for Match Highlights</a><br>
-                                    @endisset
+                                    <div class="flex">
+                                        <div class="m-auto">
+                                          <div class="shadow-md p-4 flex flex-row rounded-lg animate-bounce">
+                                            <div class="bg-red-500 inline-block rounded-lg p-1 mr-1"></div>
+                                            <b class="p-1">Match Highlights</b>
+                                          </div>
+                                        </div>
+                                      </div>             
+                                      <p class="p-1"><a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>View Highlights</a><br></p>
+                                      @endisset                       
                                     {{ $result->match_date }}
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
