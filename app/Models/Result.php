@@ -119,6 +119,7 @@ class Result extends Model
     {
         $inserted = 0;
         $failedToInsert = 0;
+        $start_time = microtime(TRUE);
         foreach ($matches as $match) {
             // check if existing match already exists in the db, if so don't re-insert this
             if (Result::where('match_id', '=', $match['matchId'])->doesntExist()) {
@@ -142,9 +143,9 @@ class Result extends Model
                 ];
                 
                 // DB::enableQueryLog();
-                if ($showOutput) {
-                    dump($data);
-                }
+                // if ($showOutput) {
+                //     dump($data);
+                // }
                 
                 try {
                     Result::create($data);
@@ -157,10 +158,9 @@ class Result extends Model
                  } catch (\Exception $e) {
                     dd($e);
                  }
-                // dd(DB::getQueryLog());                      
+                // dd(DB::getQueryLog());                
             }
         }
-
         return $inserted;
     }
 

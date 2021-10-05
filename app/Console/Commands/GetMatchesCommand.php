@@ -43,6 +43,7 @@ class GetMatchesCommand extends Command
     public function handle(Request $request)
     {
         try {
+            $start_time = microtime(TRUE);
             $showOutput = ($this->argument('output') === 'y') ? true : false;
             $controller = new StatsController();
             $results = [];
@@ -56,7 +57,7 @@ class GetMatchesCommand extends Command
 
             $x = 0;
             foreach ($properties as $property) {
-                $this->info("Collecting matches data for - {$property['platform']}/{$property['clubId']} : [{$x}]");
+                $this->info("[{$x}] Collecting matches data for - {$property['platform']}/{$property['clubId']}");
                 
                 $params = [
                     'matchType' => 'gameType13',
