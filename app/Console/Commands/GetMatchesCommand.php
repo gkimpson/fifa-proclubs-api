@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\StatsController;
 use App\Models\Result;
+use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
@@ -43,11 +44,15 @@ class GetMatchesCommand extends Command
     public function handle(Request $request)
     {
         try {
-            $start_time = microtime(TRUE);
             $showOutput = ($this->argument('output') === 'y') ? true : false;
             $controller = new StatsController();
             $results = [];
             $properties = User::pluck('properties')->unique();
+
+            $schedules = Schedule::upsert(
+                ['name' => 'proclubsapi-matches'],
+                ['properties' => json_decode($properties)]
+            );
 
             // $spinner = $this->spinner($properties->count());
             // $spinner->setMessage('Loading...');
@@ -82,8 +87,8 @@ class GetMatchesCommand extends Command
                 $this->info("{$inserted} unique results into the database");
                 // $spinner->advance();
                 $x++;
-            }
-    
+            }                       
+            // 
             // $spinner->finish();
             return 0;
         } catch (\Exception $e) {

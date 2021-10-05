@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Artisan;
@@ -46,6 +47,12 @@ class StatsController extends Controller
 
     public function careerStats(Request $request)
     {
+        $user = Schedule::updateOrCreate(
+            ['name' => 'proclubsapi-matches'],
+            ['properties' => '{}']
+        );
+        exit;
+                
         $endpoint = 'members/career/stats?';
         $params = [
             'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : self::MYCLUB_DEFAULTS['platform'],
