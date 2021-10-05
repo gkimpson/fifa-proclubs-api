@@ -12,7 +12,7 @@ class MyDashboardController extends Controller
     {
         $user = auth()->user();
         // do a quick refresh on the results...
-        Artisan::call('proclubsapi:matches '); // if param 1 is 'y' then we show output
+        Artisan::call('proclubsapi:matches n'); // if param 1 is 'y' then we show output
 
         $data = [
             'results' => Result::getResults($user->properties)

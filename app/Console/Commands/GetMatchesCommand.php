@@ -43,7 +43,7 @@ class GetMatchesCommand extends Command
     public function handle(Request $request)
     {
         try {
-            $showOutput = ($this->argument('output') == 'y') ? true : false;
+            $showOutput = ($this->argument('output') === 'y') ? true : false;
             $controller = new StatsController();
             $results = [];
             $properties = User::pluck('properties')->unique();
