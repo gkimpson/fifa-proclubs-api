@@ -88,11 +88,11 @@
                                         <div class="m-auto">
                                           <div class="shadow-md p-4 flex flex-row rounded-lg animate-bounce">
                                             <div class="bg-red-500 inline-block rounded-lg p-1 mr-1"></div>
-                                            <b class="p-1">Match Highlights</b>
+                                            <b class="p-1">GOAAAAALLLL!</b>
                                           </div>
                                         </div>
                                       </div>             
-                                      <p class="p-1"><a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>View Highlights</a><br></p>
+                                      <p class="p-1"><a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>Click to View Highlights</a><br></p>
                                       @endisset                       
                                     {{ $result->match_date }}
                                 </td>
