@@ -16,7 +16,7 @@ class Result extends Model
 {
     use HasFactory;
 
-    // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform_id'];
+    // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform', 'media'];
     protected $guarded = [];
 
     public static function getResults($properties)

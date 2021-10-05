@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMediaTable extends Migration
+class AddMediaColumnToResultsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('media', function (Blueprint $table) {
-            $table->id();
-            $table->string('youtube_id');
-            $table->json('properties')->nullable();
-            $table->timestamps();
+        Schema::table('results', function (Blueprint $table) {
+            $table->string('media')->nullable()->after('properties');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateMediaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('media');
+        Schema::table('results', function (Blueprint $table) {
+            $table->dropColumn('media');
+        });
     }
 }

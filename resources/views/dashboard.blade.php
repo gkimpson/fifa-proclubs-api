@@ -83,6 +83,9 @@
                                 </td>
                                 <td class="border-b border-gray-200 bg-white text-xs">
                                     ID: {{ $result->match_id}}<br>
+                                    @isset($result->media)
+                                    <a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>Match Highlights</a>
+                                    @endisset
                                     {{ $result->match_date }}
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
