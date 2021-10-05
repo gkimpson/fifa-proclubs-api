@@ -16,7 +16,7 @@ class GetMatchesCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'proclubsapi:matches';
+    protected $signature = 'proclubsapi:matches {output=y}';
 
     /**
      * The console command description.
@@ -43,6 +43,7 @@ class GetMatchesCommand extends Command
     public function handle(Request $request)
     {
         try {
+            $showOutput = ($this->argument('output') == 'y') ? true : false;
             $controller = new StatsController();
             $results = [];
             $properties = User::pluck('properties')->unique();
@@ -76,7 +77,7 @@ class GetMatchesCommand extends Command
                 $results = array_merge($results_1->toArray(), $results_2->toArray());
                 $total = count($results);
                 $this->info("Total matches found : {$total}");
-                $inserted = Result::insertUniqueMatches($results, $property['platform']);
+                $inserted = Result::insertUniqueMatches($results, $property['platform'], $showOutput);
                 $this->info("{$inserted} unique results into the database");
                 // $spinner->advance();
                 $x++;

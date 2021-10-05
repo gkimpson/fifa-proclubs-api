@@ -115,7 +115,7 @@ class Result extends Model
         return $data;
     }
 
-    public static function insertUniqueMatches($matches, $platform = null)
+    public static function insertUniqueMatches($matches, $platform = null, $showOutput = false)
     {
         $inserted = 0;
         $failedToInsert = 0;
@@ -142,11 +142,18 @@ class Result extends Model
                 ];
                 
                 // DB::enableQueryLog();
-                dump($data);
+                if ($showOutput) {
+                    dump($data);
+                }
+                
                 try {
                     Result::create($data);
                     $inserted++;
-                    dump('inserted matchId: '. $match['matchId']); // never see this on line but always on local
+
+                    if ($showOutput) {
+                        dump('inserted matchId: '. $match['matchId']);
+                    }
+                    
                  } catch (\Exception $e) {
                     dd($e);
                  }
