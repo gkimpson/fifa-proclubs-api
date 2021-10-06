@@ -23,9 +23,9 @@ class StatsController extends Controller
     ];
 
     const MYCLUB_DEFAULTS = [
-        'platform' => 'ps4',
-        'clubId' => '1741008',
-        'clubName' => 'Banterbury',
+        'platform' => 'ps5',
+        'clubId' => '310718',
+        'clubName' => 'Banterbury FC',
         'matchType' => 'gameType9' // (gameType13 = cup, gameType9 = league)
     ];
 
@@ -46,13 +46,7 @@ class StatsController extends Controller
     }
 
     public function careerStats(Request $request)
-    {
-        $user = Schedule::updateOrCreate(
-            ['name' => 'proclubsapi-matches'],
-            ['properties' => '{}']
-        );
-        exit;
-                
+    {           
         $endpoint = 'members/career/stats?';
         $params = [
             'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : self::MYCLUB_DEFAULTS['platform'],
