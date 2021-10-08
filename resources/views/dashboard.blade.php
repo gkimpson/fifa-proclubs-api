@@ -50,6 +50,8 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{ $results->links() }}
+
                             @foreach ($results as $key => $result)
                             {{-- @if ($loop->first)
                                 This is the first iteration.

@@ -16,6 +16,8 @@ class Result extends Model
 {
     use HasFactory;
 
+    CONST PAGINATION = 10;
+
     // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform', 'media'];
     protected $guarded = [];
 
@@ -28,7 +30,7 @@ class Result extends Model
         return Result::where('home_team_id', '=', $properties['clubId'])
                     ->orWhere('away_team_id', '=', $properties['clubId'])
                     ->orderBy('match_date', 'desc')
-                    ->get();
+                    ->paginate(SELF::PAGINATION);
     }
 
     public static function formatData($data)

@@ -12,12 +12,17 @@ class MyDashboardController extends Controller
     {
         $user = auth()->user();
         // do a quick refresh on the results...
-        Artisan::call('proclubsapi:matches n'); // if param 1 is 'y' then we show output
+        // Artisan::call('proclubsapi:matches n'); // if param 1 is 'y' then we show output
+
+        // $results = Result::paginate(5);
+        $results = Result::getResults($user->properties);
+        // dd($results);
 
         $data = [
             'results' => Result::getResults($user->properties)
         ];
 
+        
         return view('dashboard', $data);
     }
 
