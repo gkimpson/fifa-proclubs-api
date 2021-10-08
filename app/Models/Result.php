@@ -21,6 +21,11 @@ class Result extends Model
     // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform', 'media'];
     protected $guarded = [];
 
+    public function getMatchDateAttribute($value) 
+    {
+        return Carbon::parse($value);
+    }    
+
     public static function getResults($properties)
     {
         if (!$properties['clubId']) {
