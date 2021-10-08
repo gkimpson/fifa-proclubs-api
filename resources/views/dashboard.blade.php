@@ -83,7 +83,7 @@
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-gray-900 whitespace-no-wrap text-center">{{ $result->home_team_goals }}</p>
                                 </td>
-                                <td class="hidden md:table-cell border-b border-gray-200 bg-white text-xs">
+                                <td class="hidden md:table-cell border-b border-gray-200 bg-white text-xs text-center">
                                     {{-- ID: {{ $result->match_id}}<br> --}}
                                     @isset($result->media)
                                     <div class="flex">
