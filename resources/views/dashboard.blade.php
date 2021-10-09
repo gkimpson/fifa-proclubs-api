@@ -20,7 +20,7 @@
     <div class="container mx-auto px-4 sm:px-8">
         <div class="py-8">
             <div>
-                <h2 class="text-2xl font-semibold leading-tight">Matches Schedule</h2>
+                <h2 class="text-2xl font-semibold leading-tight">Matches</h2>
             </div>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
@@ -62,7 +62,7 @@
                             
                             <tr class="md:hidden">
                                 <td class="visible sm:table-cell bg-white text-sm"></td>
-                                <td class="visible sm:table-cell text-center bg-white text-xs" colspan="2">{{ $result->match_date->diffForHumans() }}</td>
+                                <td class="visible sm:table-cell text-center bg-white text-xs text-gray-500" colspan="2">{{ $result->match_date->diffForHumans() }}</td>
                                 <td class="visible sm:table-cell bg-white text-sm"></td>
                             </tr>
                             <tr>
@@ -90,7 +90,7 @@
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-gray-900 whitespace-no-wrap text-center">{{ $result->home_team_goals }}</p>
                                 </td>
-                                <td class="hidden md:table-cell border-b border-gray-200 bg-white text-xs text-center">
+                                <td class="hidden md:table-cell border-b border-gray-200 bg-white text-xs text-center text-gray-500">
                                     @isset($result->media)
                                     <div class="flex">
                                         <div class="m-auto">
