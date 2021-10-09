@@ -61,9 +61,14 @@
                             @if ($loop->last)
                                 This is the last iteration.
                             @endif --}}
-
+                            
+                            <tr class="md:hidden">
+                                <td class="visible sm:table-cell bg-white text-sm"></td>
+                                <td class="visible sm:table-cell text-center bg-white text-xs" colspan="2">{{ $result->match_date->diffForHumans() }}</td>
+                                <td class="visible sm:table-cell bg-white text-sm"></td>
+                            </tr>
                             <tr>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm w-2/5">
+                                <td class="px-2 py-2 md:px-5 md:py-5 border-b border-gray-200 bg-white text-sm w-2/5">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 w-10 h-10 hidden sm:table-cell">
                                             <img class="w-full h-full rounded-full"
@@ -103,7 +108,7 @@
                                         {{ $result->away_team_goals }}
                                     </p>
                                 </td>
-                                <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm w-2/5">
+                                <td class="px-2 py-2 md:px-5 md:py-5 border-b border-gray-200 bg-white text-sm w-2/5">
                                     <div class="flex items-center float-right">
                                         <div class="mr-3">
                                             <p class="text-gray-900 whitespace-no-wrap text-right">
