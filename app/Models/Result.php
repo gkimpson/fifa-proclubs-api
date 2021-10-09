@@ -214,15 +214,26 @@ class Result extends Model
         return ($this->attributes['home_team_id'] == $user->properties['clubId']) ? 'home' : 'away';
     }
 
+    private function getCustomCrestUrl($teamId)
+    {
+        $file = "https://fifa21.content.easports.com/fifa/fltOnlineAssets/05772199-716f-417d-9fe0-988fa9899c4d/2021/fifaweb/crests/256x256/l{$teamId}.png";
+        $handle = @fopen($file, 'r');
+        if (!$handle) {
+            return 'https://media.contentapi.ea.com/content/dam/ea/fifa/fifa-21/pro-clubs/common/pro-clubs/crest-default.png';
+        } else {
+            fclose($handle);
+            return $file;
+        }
+    }
+
     /** required for the club logos */
     public function getTeamIdsAttribute()
     {
         $properties = json_decode($this->attributes['properties']);
         $teams = [
-            'home' => "https://fifa21.content.easports.com/fifa/fltOnlineAssets/05772199-716f-417d-9fe0-988fa9899c4d/2021/fifaweb/crests/256x256/l{$properties->clubs[0]->teamId}.png",
-            'away' => "https://fifa21.content.easports.com/fifa/fltOnlineAssets/05772199-716f-417d-9fe0-988fa9899c4d/2021/fifaweb/crests/256x256/l{$properties->clubs[1]->teamId}.png",
+            'home' => $this->getCustomCrestUrl($properties->clubs[0]->teamId),
+            'away' => $this->getCustomCrestUrl($properties->clubs[1]->teamId),
         ];
-
         return $teams;
     }
 
