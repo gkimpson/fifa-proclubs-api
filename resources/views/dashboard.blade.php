@@ -50,7 +50,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <div class="flex-1">{{ $results->links() }}</div>
+                            <div class="px-2 py-2 md:px-5 md:py-5 flex-1">{{ $results->links() }}</div>
                             @foreach ($results as $key => $result)
                             {{-- @if ($loop->first)
                                 This is the first iteration.
@@ -133,6 +133,9 @@
                             </tr>                              
                             
                         @endforeach
+                        <tr>
+                            <td colspan="5"><div class="px-2 py-2 md:px-5 md:py-5 flex-1">{{ $results->links() }}</div></td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
