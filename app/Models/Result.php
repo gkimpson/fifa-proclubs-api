@@ -20,7 +20,7 @@ class Result extends Model
 
     // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform', 'media'];
     protected $guarded = [];
-    protected $appends = ['my_club_home_or_away'];
+    protected $appends = ['my_club_home_or_away', 'team_ids', 'home_team_crest_url', 'away_team_crest_url'];
 
     public function getMatchDateAttribute($value) 
     {
@@ -212,6 +212,30 @@ class Result extends Model
     {
         $user = auth()->user();
         return ($this->attributes['home_team_id'] == $user->properties['clubId']) ? 'home' : 'away';
+    }
+
+    /** required for the club logos */
+    public function getTeamIdsAttribute()
+    {
+        $properties = json_decode($this->attributes['properties']);
+        $teams = [
+            'home' => "https://fifa21.content.easports.com/fifa/fltOnlineAssets/05772199-716f-417d-9fe0-988fa9899c4d/2021/fifaweb/crests/256x256/l{$properties->clubs[0]->teamId}.png",
+            'away' => "https://fifa21.content.easports.com/fifa/fltOnlineAssets/05772199-716f-417d-9fe0-988fa9899c4d/2021/fifaweb/crests/256x256/l{$properties->clubs[1]->teamId}.png",
+        ];
+
+        return $teams;
+    }
+
+    public function getHomeTeamCrestUrlAttribute()
+    {
+        $teams = $this->getTeamIdsAttribute();
+        return $teams['home'];
+    }
+
+    public function getAwayTeamCrestUrlAttribute()
+    {
+        $teams = $this->getTeamIdsAttribute();
+        return $teams['away'];
     }
 
 }

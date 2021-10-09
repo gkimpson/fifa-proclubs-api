@@ -48,7 +48,10 @@ Route::get('/settings', 'App\Http\Controllers\StatsController@settings');
 Route::get('/seasonleaderboard', 'App\Http\Controllers\StatsController@seasonalLeaderboard');
 Route::get('/clubleaderboard', 'App\Http\Controllers\StatsController@clubLeaderboard');
 Route::get('/command', 'App\Http\Controllers\StatsController@runCommand');
+
+
 Route::get('/overview', 'App\Http\Controllers\StatsController@overviewScrape');
+
 
 Route::get('/scrape', function() {
     $client = new Client();

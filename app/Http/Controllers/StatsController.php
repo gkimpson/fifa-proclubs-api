@@ -215,7 +215,6 @@ class StatsController extends Controller
      */
     public function overviewScrape($clubId, $platformId, $attributes = [])
     {
-        // dump($clubId);
         $client = new Client();
         $client->setServerParameter('HTTP_USER_AGENT', 'Mozilla/5.0 (X11; Linux i686; rv:78.0) Gecko/20100101 Firefox/78.0');
         $client->setServerParameter('REFERER', $this->referer);
