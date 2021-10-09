@@ -11,14 +11,16 @@ class MyDashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
+
         // do a quick refresh on the results...
         // Artisan::call('proclubsapi:matches n'); // if param 1 is 'y' then we show output
-
+        
         $data = [
-            'results' => Result::getResults($user->properties)
+            'results' => Result::getResults($user->properties),
+            'myClubId' => (int)$user->properties['clubId']
         ];
 
-        
+        // dump($data['results'][0]->toArray());
         return view('dashboard', $data);
     }
 

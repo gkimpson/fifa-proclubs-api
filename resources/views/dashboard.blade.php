@@ -51,8 +51,6 @@
                         </thead>
                         <tbody>
                             <div class="flex-1">{{ $results->links() }}</div>
-                            
-
                             @foreach ($results as $key => $result)
                             {{-- @if ($loop->first)
                                 This is the first iteration.
@@ -68,7 +66,10 @@
                                 <td class="visible sm:table-cell bg-white text-sm"></td>
                             </tr>
                             <tr>
-                                <td class="px-2 py-2 md:px-5 md:py-5 border-b border-gray-200 bg-white text-sm w-2/5">
+                                <td class="px-2 py-2 md:px-5 md:py-5 border-b border-gray-200 bg-white text-sm w-2/5 
+                                @if($result->outcome === 'homewin' && $result->home_team_id === $myClubId) bg-green-200 
+                                @elseif($result->outcome === 'awaywin' && $result->home_team_id === $myClubId) bg-red-200 
+                                @endif">
                                     <div class="flex items-center">
                                         <div class="flex-shrink-0 w-10 h-10 hidden sm:table-cell">
                                             <img class="w-full h-full rounded-full"
@@ -108,7 +109,10 @@
                                         {{ $result->away_team_goals }}
                                     </p>
                                 </td>
-                                <td class="px-2 py-2 md:px-5 md:py-5 border-b border-gray-200 bg-white text-sm w-2/5">
+                                <td class="px-2 py-2 md:px-5 md:py-5 border-b border-gray-200 bg-white text-sm w-2/5
+                                @if($result->outcome === 'awaywin' && $result->away_team_id === $myClubId) bg-green-200
+                                @elseif($result->outcome === 'homewin' && $result->away_team_id === $myClubId) bg-red-200 
+                                @endif">
                                     <div class="flex items-center float-right">
                                         <div class="mr-3">
                                             <p class="text-gray-900 whitespace-no-wrap text-right">

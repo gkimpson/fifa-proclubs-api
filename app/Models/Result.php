@@ -20,6 +20,7 @@ class Result extends Model
 
     // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform', 'media'];
     protected $guarded = [];
+    protected $appends = ['my_club_home_or_away'];
 
     public function getMatchDateAttribute($value) 
     {
@@ -205,6 +206,12 @@ class Result extends Model
         $referer = 'https://www.ea.com/';
         $url = 'https://proclubs.ea.com/api/fifa/' . $endpoint . http_build_query($params);
         return Http::withHeaders(['Referer' => $referer])->get($url)->json();
+    }
+
+    public function getMyClubHomeOrAwayAttribute()
+    {
+        $user = auth()->user();
+        return ($this->attributes['home_team_id'] == $user->properties['clubId']) ? 'home' : 'away';
     }
 
 }
