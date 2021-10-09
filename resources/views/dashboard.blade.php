@@ -40,7 +40,7 @@
                                     
                                 </th>
                                 <th
-                                    class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                    class="hidden sm:table-cell px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                     
                                 </th>
                                 <th
@@ -50,7 +50,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{ $results->links() }}
+                            <div class="flex-1">{{ $results->links() }}</div>
+                            
 
                             @foreach ($results as $key => $result)
                             {{-- @if ($loop->first)
@@ -84,7 +85,6 @@
                                     <p class="text-gray-900 whitespace-no-wrap text-center">{{ $result->home_team_goals }}</p>
                                 </td>
                                 <td class="hidden md:table-cell border-b border-gray-200 bg-white text-xs text-center">
-                                    {{-- ID: {{ $result->match_id}}<br> --}}
                                     @isset($result->media)
                                     <div class="flex">
                                         <div class="m-auto">
