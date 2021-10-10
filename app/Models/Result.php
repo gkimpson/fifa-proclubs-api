@@ -243,13 +243,21 @@ class Result extends Model
     public function getHomeTeamCrestUrlAttribute()
     {
         $teams = $this->getTeamIdsAttribute();
-        return $teams['home'];
+        if (isset($teams['home'])) {
+            return $teams['home'];
+        }
+
+        return 'https://media.contentapi.ea.com/content/dam/ea/fifa/fifa-21/pro-clubs/common/pro-clubs/crest-default.png';   
     }
 
     public function getAwayTeamCrestUrlAttribute()
     {
         $teams = $this->getTeamIdsAttribute();
-        return $teams['away'];
+        if (isset($teams['away'])) {
+            return $teams['away'];
+        }
+
+        return 'https://media.contentapi.ea.com/content/dam/ea/fifa/fifa-21/pro-clubs/common/pro-clubs/crest-default.png';  
     }
 
 }
