@@ -22,7 +22,7 @@ class Result extends Model
     protected $guarded = [];
     protected $appends = ['my_club_home_or_away', 'team_ids', 'home_team_crest_url', 'away_team_crest_url'];
     protected $casts = [
-        'properties' => 'json'
+        // 'properties' => 'json'
     ];
 
     public function getMatchDateAttribute($value) 

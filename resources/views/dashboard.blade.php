@@ -85,7 +85,12 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $result->properties['clubs'][0]['name'] }}
+                                                {{-- {{ $result->properties['clubs'][0]['name'] }} --}}
+                                                @php 
+                                                    $p = json_decode($result->properties);
+                                                    print($p->clubs[0]->name);
+                                                    // todo: fix this later so there isn't a need to json_decode this in blade
+                                                @endphp                                                
                                             </p>
                                         </div>
                                     </div>
@@ -122,7 +127,12 @@
                                     <div class="flex items-center float-right">
                                         <div class="mr-3">
                                             <p class="text-gray-900 whitespace-no-wrap text-right">
-                                                {{ $result->properties['clubs'][1]['name'] }}
+                                                {{-- {{ $result->properties['clubs'][1]['name'] }} --}}
+                                                @php 
+                                                    $p = json_decode($result->properties);
+                                                    print($p->clubs[1]->name);
+                                                    // todo: fix this later so there isn't a need to json_decode this in blade
+                                                @endphp                                                    
                                             </p>
                                         </div>
                                         <div class="flex-shrink-0 w-10 h-10 hidden sm:table-cell">
