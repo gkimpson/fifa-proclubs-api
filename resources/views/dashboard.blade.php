@@ -66,7 +66,7 @@
                             <tr class="md:hidden">
                                 <td class="visible sm:table-cell bg-white text-sm"></td>
                                 <td class="visible sm:table-cell text-center bg-white text-xs text-gray-500" colspan="2">
-                                    {{ $result->match_date->diffForHumans() }}<br>@isset($result->properties['aggregate'])
+                                    {{ $result->match_date->diffForHumans() }}<br>@isset($result->match_data)
                                     <button @click="show = !show">Insights</button>
                                     @endisset
                                 </td>
@@ -111,7 +111,7 @@
                                       <p class="p-1"><a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>Click to View Highlights</a><br></p>
                                       @endisset                       
                                     {{ $result->match_date->diffForHumans() }}<br>
-                                    @isset($result->properties['aggregate'])
+                                    @isset($result->match_data)
                                     <button @click="show = !show">Insights</button>
                                     @endisset
                                 </td>
@@ -145,60 +145,60 @@
                             </tr>
                             <tr>
                                 <td x-show="show" class="text-center text-xs" colspan="5">
-                                    @isset($result->properties['aggregate'])
+                                    @isset($result->match_data)
                                     {{-- todo: need to use components for this.. --}}
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['shots'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->shots }}</div>
                                         <div class="text-center text-xs md:text-sm">Shots on Target</div>
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['shots'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->shots }}</div>
                                     </div>
 
-                                    <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['saves'] }}</div>
+                                    {{-- <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->saves }}</div>
                                         <div class="text-center text-xs md:text-sm">Saves</div>
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['saves'] }}</div>
-                                    </div>                                    
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->saves }}</div>
+                                    </div>                                     --}}
 
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['redcards'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->redcards }}</div>
                                         <div class="text-center text-xs md:text-sm">Red Cards</div>
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['redcards'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->redcards }}</div>
                                     </div>
 
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['tacklesmade'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->tacklesmade }}</div>
                                         <div class="text-center text-xs md:text-sm">Tackles Made</div>
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['tacklesmade'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->tacklesmade }}</div>
                                     </div>
 
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['tackleattempts'] }}</div>
-                                        <div class="text-center text-xs md:text-sm">Tackles Attempted</div>
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['tackleattempts'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->tackleattempts }}</div>
+                                        <div class="text-center text-xs md:text-sm">Tackle Attempts</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->tackleattempts }}</div>
                                     </div>       
                                     
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['assists'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->assists }}</div>
                                         <div class="text-center text-xs md:text-sm">Assists</div>
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['assists'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->assists }}</div>
                                     </div>                                      
 
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['passesmade'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->passesmade }}</div>
                                         <div class="text-center text-xs md:text-sm">Passes Made</div>
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['passesmade'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->passesmade }}</div>
                                     </div>
 
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['passattempts'] }}</div>
-                                        <div class="text-center text-xs md:text-sm">Passes Attempted</div>
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['passattempts'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->passattempts }}</div>
+                                        <div class="text-center text-xs md:text-sm">Pass Attempts</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->passattempts }}</div>
                                     </div> 
 
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-xs md:text-sm">{{ round(($result->properties['aggregate'][$result->home_team_id]['passesmade'] / $result->properties['aggregate'][$result->home_team_id]['passattempts']) * 100) }}%</div>
+                                        <div class="text-center text-xs md:text-sm">{{ round(($result->match_data[$result->home_team_id]->passesmade / $result->match_data[$result->home_team_id]->passattempts) * 100) }}%</div>
                                         <div class="text-center text-xs md:text-sm">Pass Completion %</div>
-                                        <div class="text-center text-xs md:text-sm">{{ round(($result->properties['aggregate'][$result->away_team_id]['passesmade'] / $result->properties['aggregate'][$result->away_team_id]['passattempts']) * 100) }}%</div>
+                                        <div class="text-center text-xs md:text-sm">{{ round(($result->match_data[$result->away_team_id]->passesmade / $result->match_data[$result->away_team_id]->passattempts) * 100) }}%</div>
                                     </div>                                                                       
                                     @endisset
                                 </td>

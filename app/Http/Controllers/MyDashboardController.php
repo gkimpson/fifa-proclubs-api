@@ -21,7 +21,9 @@ class MyDashboardController extends Controller
         ];
 
         $a = $data['results'][0];
-        // dump($a->properties['aggregate']);   
+        // dump($a->match_data[310718]->mom);
+        // dump($a->properties);
+        // dump($a->properties[]);   
         // dump($data['results'][0]->toArray());
         return view('dashboard', $data);
     }

@@ -20,7 +20,7 @@ class Result extends Model
 
     // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform', 'media'];
     protected $guarded = [];
-    protected $appends = ['my_club_home_or_away', 'team_ids', 'home_team_crest_url', 'away_team_crest_url'];
+    protected $appends = ['my_club_home_or_away', 'team_ids', 'home_team_crest_url', 'away_team_crest_url', 'match_data'];
     protected $casts = [
         // 'properties' => 'json'
     ];
@@ -258,6 +258,16 @@ class Result extends Model
         }
 
         return 'https://media.contentapi.ea.com/content/dam/ea/fifa/fifa-21/pro-clubs/common/pro-clubs/crest-default.png';  
+    }
+
+    public function getMatchDataAttribute()
+    {
+        $json = json_decode($this->attributes['properties']);
+        if (isset($json->aggregate)) {
+            return collect($json->aggregate);
+        }
+
+        return null;
     }
 
 }
