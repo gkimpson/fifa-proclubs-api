@@ -67,8 +67,25 @@
                                 <td class="visible sm:table-cell bg-white text-sm"></td>
                                 <td class="visible sm:table-cell text-center bg-white text-xs text-gray-500" colspan="2">
                                     {{ $result->match_date->diffForHumans() }}<br>@isset($result->match_data)
-                                    <button @click="show = !show">Stats</button>
-                                    @endisset
+                                    <button @click="show = !show">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                                      </svg>
+                                    </button>
+                                    @endisset     
+                                    @if (count($result->media_ids) > 0)
+                                    <div class="flex flex-row">
+                                      @foreach ($result->media_ids as $key => $media_id)                                        
+                                            <div><a href="//www.youtube.com/watch?v={{ $media_id }}" data-lity>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                            </svg>
+                                            </a>
+                                            </div>                                     
+                                      @endforeach
+                                    </div>     
+                                    @endif                                
                                 </td>
                                 <td class="visible sm:table-cell bg-white text-sm"></td>
                             </tr>
@@ -100,21 +117,26 @@
                                 </td>
                                 <td class="hidden md:table-cell border-b border-gray-200 bg-white text-xs text-center text-gray-500">
                                     @if (count($result->media_ids) > 0)
-                                        <div class="flex">
-                                            <div class="m-auto">
-                                            <div class="shadow-md p-4 flex flex-row rounded-lg animate-bounce">
-                                                <div class="bg-red-500 inline-block rounded-lg p-1 mr-1"></div>
-                                                <b class="p-1">GOAAAAALLLL!</b>
-                                            </div>
-                                            </div>
-                                        </div>    
-                                        @endif      
-                                      @foreach ($result->media_ids as $key => $media_id)
-                                        <span class=""><a href="//www.youtube.com/watch?v={{ $media_id }}" data-lity>Replay {{ $key+1 }}</a><br></span>
-                                      @endforeach                      
-                                    {{ $result->match_date->diffForHumans() }}<br>
+                                    <div class="flex flex-row">
+                                      @foreach ($result->media_ids as $key => $media_id)                                        
+                                            <div><a href="//www.youtube.com/watch?v={{ $media_id }}" data-lity>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                                            </svg>
+                                            </a>
+                                            </div>                                     
+                                      @endforeach
+                                    </div>     
+                                    @endif  
+                                                  
+                                    <div>{{ $result->match_date->diffForHumans() }}</div>
                                     @isset($result->match_data)
-                                    <button @click="show = !show">Stats</button>
+                                    <button @click="show = !show">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+                                      </svg>
+                                    </button>
                                     @endisset
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
