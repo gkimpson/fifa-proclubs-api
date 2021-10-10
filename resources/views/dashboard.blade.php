@@ -87,8 +87,8 @@
                                             <p class="text-gray-900 whitespace-no-wrap">
                                                 {{-- {{ $result->properties['clubs'][0]['name'] }} --}}
                                                 @php 
-                                                    $p = json_decode($result->properties);
-                                                    print($p->clubs[0]->name);
+                                                    // $p = json_decode($result->properties);
+                                                    // print($p->clubs[0]->name);
                                                     // todo: fix this later so there isn't a need to json_decode this in blade
                                                 @endphp                                                
                                             </p>
@@ -129,8 +129,8 @@
                                             <p class="text-gray-900 whitespace-no-wrap text-right">
                                                 {{-- {{ $result->properties['clubs'][1]['name'] }} --}}
                                                 @php 
-                                                    $p = json_decode($result->properties);
-                                                    print($p->clubs[1]->name);
+                                                    // $p = json_decode($result->properties);
+                                                    // print($p->clubs[1]->name);
                                                     // todo: fix this later so there isn't a need to json_decode this in blade
                                                 @endphp                                                    
                                             </p>
