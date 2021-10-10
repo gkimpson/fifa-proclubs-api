@@ -98,7 +98,10 @@
                                       </div>             
                                       <p class="p-1"><a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>Click to View Highlights</a><br></p>
                                       @endisset                       
-                                    {{ $result->match_date->diffForHumans() }}<br><button @click="show = !show">Insights</button>
+                                    {{ $result->match_date->diffForHumans() }}<br>
+                                    @isset($result->properties['aggregate'])
+                                    <button @click="show = !show">Insights</button>
+                                    @endisset
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-gray-900 whitespace-no-wrap text-center">
@@ -128,51 +131,51 @@
                                     @isset($result->properties['aggregate'])
                                     {{-- todo: need to use components for this.. --}}
                                     <div class="grid grid-cols-3 gap-4 w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->home_team_id]['shots'] }}</div>
-                                        <div class="text-center text-base">Shots on Target</div>
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->away_team_id]['shots'] }}</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['shots'] }}</div>
+                                        <div class="text-center text-sm">Shots on Target</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['shots'] }}</div>
                                     </div>
 
                                     <div class="grid grid-cols-3 gap-4 w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->home_team_id]['saves'] }}</div>
-                                        <div class="text-center text-base">Saves</div>
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->away_team_id]['saves'] }}</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['saves'] }}</div>
+                                        <div class="text-center text-sm">Saves</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['saves'] }}</div>
                                     </div>                                    
 
                                     <div class="grid grid-cols-3 gap-4 w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->home_team_id]['redcards'] }}</div>
-                                        <div class="text-center text-base">Red Cards</div>
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->away_team_id]['redcards'] }}</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['redcards'] }}</div>
+                                        <div class="text-center text-sm">Red Cards</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['redcards'] }}</div>
                                     </div>
 
                                     <div class="grid grid-cols-3 gap-4 w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->home_team_id]['tacklesmade'] }}</div>
-                                        <div class="text-center text-base">Tackles Made</div>
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->away_team_id]['tacklesmade'] }}</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['tacklesmade'] }}</div>
+                                        <div class="text-center text-sm">Tackles Made</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['tacklesmade'] }}</div>
                                     </div>
 
                                     <div class="grid grid-cols-3 gap-4 w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->home_team_id]['tackleattempts'] }}</div>
-                                        <div class="text-center text-base">Tackles Attempted</div>
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->away_team_id]['tackleattempts'] }}</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['tackleattempts'] }}</div>
+                                        <div class="text-center text-sm">Tackles Attempted</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['tackleattempts'] }}</div>
                                     </div>                                    
 
                                     <div class="grid grid-cols-3 gap-4 w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->home_team_id]['passesmade'] }}</div>
-                                        <div class="text-center text-base">Passes Made</div>
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->away_team_id]['passesmade'] }}</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['passesmade'] }}</div>
+                                        <div class="text-center text-sm">Passes Made</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['passesmade'] }}</div>
                                     </div>
 
                                     <div class="grid grid-cols-3 gap-4 w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->home_team_id]['passattempts'] }}</div>
-                                        <div class="text-center text-base">Passes Attempted</div>
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->away_team_id]['passattempts'] }}</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['passattempts'] }}</div>
+                                        <div class="text-center text-sm">Passes Attempted</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['passattempts'] }}</div>
                                     </div> 
 
                                     <div class="grid grid-cols-3 gap-4 w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->home_team_id]['assists'] }}</div>
-                                        <div class="text-center text-base">Assists</div>
-                                        <div class="text-center text-base">{{ $result->properties['aggregate'][$result->away_team_id]['assists'] }}</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['assists'] }}</div>
+                                        <div class="text-center text-sm">Assists</div>
+                                        <div class="text-center text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['assists'] }}</div>
                                     </div>                                    
                                     @endisset
                                 </td>
