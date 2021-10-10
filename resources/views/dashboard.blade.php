@@ -22,6 +22,9 @@
             <div>
                 <h2 class="text-2xl font-semibold leading-tight">Matches</h2>
             </div>
+            <div class="mx-auto px-4 sm:px-8 text-center">
+                <p class="p-1"><a href="//www.youtube.com/watch?v=M82Eua9wkQc" data-lity>GOAL OF THE MONTH</a><br></p>
+            </div>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
                 <div x-data="{ show: false }" class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                     <table class="min-w-full leading-normal">
@@ -162,7 +165,13 @@
                                         <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['tackleattempts'] }}</div>
                                         <div class="text-center text-xs md:text-sm">Tackles Attempted</div>
                                         <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['tackleattempts'] }}</div>
-                                    </div>                                    
+                                    </div>       
+                                    
+                                    <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
+                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['assists'] }}</div>
+                                        <div class="text-center text-xs md:text-sm">Assists</div>
+                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['assists'] }}</div>
+                                    </div>                                      
 
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
                                         <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['passesmade'] }}</div>
@@ -177,10 +186,10 @@
                                     </div> 
 
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->home_team_id]['assists'] }}</div>
-                                        <div class="text-center text-xs md:text-sm">Assists</div>
-                                        <div class="text-center text-xs md:text-sm">{{ $result->properties['aggregate'][$result->away_team_id]['assists'] }}</div>
-                                    </div>                                    
+                                        <div class="text-center text-xs md:text-sm">{{ round(($result->properties['aggregate'][$result->home_team_id]['passesmade'] / $result->properties['aggregate'][$result->home_team_id]['passattempts']) * 100) }}%</div>
+                                        <div class="text-center text-xs md:text-sm">Pass Completion %</div>
+                                        <div class="text-center text-xs md:text-sm">{{ round(($result->properties['aggregate'][$result->away_team_id]['passesmade'] / $result->properties['aggregate'][$result->away_team_id]['passattempts']) * 100) }}%</div>
+                                    </div>                                                                       
                                     @endisset
                                 </td>
                             </tr>
