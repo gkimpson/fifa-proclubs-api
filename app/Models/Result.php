@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\User;
+use Illuminate\Support\Str;
 
 class Result extends Model
 {
@@ -20,7 +21,7 @@ class Result extends Model
 
     // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform', 'media'];
     protected $guarded = [];
-    protected $appends = ['my_club_home_or_away', 'team_ids', 'home_team_crest_url', 'away_team_crest_url', 'match_data'];
+    protected $appends = ['my_club_home_or_away', 'team_ids', 'home_team_crest_url', 'away_team_crest_url', 'match_data', 'media_ids'];
     protected $casts = [
         // 'properties' => 'json'
     ];
@@ -268,6 +269,16 @@ class Result extends Model
         }
 
         return null;
+    }
+
+    public function getMediaIdsAttribute()
+    {
+        $csv = $this->attributes['media'];
+        $youtubeIds = [];
+        if (!empty($csv)) {
+            $youtubeIds = Str::of($csv)->explode(',');
+        }
+        return $youtubeIds;
     }
 
 }

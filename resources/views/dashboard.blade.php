@@ -67,7 +67,7 @@
                                 <td class="visible sm:table-cell bg-white text-sm"></td>
                                 <td class="visible sm:table-cell text-center bg-white text-xs text-gray-500" colspan="2">
                                     {{ $result->match_date->diffForHumans() }}<br>@isset($result->match_data)
-                                    <button @click="show = !show">Insights</button>
+                                    <button @click="show = !show">Stats</button>
                                     @endisset
                                 </td>
                                 <td class="visible sm:table-cell bg-white text-sm"></td>
@@ -85,7 +85,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{-- {{ $result->properties['clubs'][0]['name'] }} --}}
+                                                {{-- {{ $result->properties['clubs'][0]['name'] }} --}} 
                                                 @php 
                                                     $p = json_decode($result->properties);
                                                     print($p->clubs[0]->name);
@@ -99,20 +99,22 @@
                                     <p class="text-gray-900 whitespace-no-wrap text-center">{{ $result->home_team_goals }}</p>
                                 </td>
                                 <td class="hidden md:table-cell border-b border-gray-200 bg-white text-xs text-center text-gray-500">
-                                    @isset($result->media)
-                                    <div class="flex">
-                                        <div class="m-auto">
-                                          <div class="shadow-md p-4 flex flex-row rounded-lg animate-bounce">
-                                            <div class="bg-red-500 inline-block rounded-lg p-1 mr-1"></div>
-                                            <b class="p-1">GOAAAAALLLL!</b>
-                                          </div>
-                                        </div>
-                                      </div>             
-                                      <p class="p-1"><a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>View Highlights</a><br></p>
-                                      @endisset                       
+                                    @if (count($result->media_ids) > 0)
+                                        <div class="flex">
+                                            <div class="m-auto">
+                                            <div class="shadow-md p-4 flex flex-row rounded-lg animate-bounce">
+                                                <div class="bg-red-500 inline-block rounded-lg p-1 mr-1"></div>
+                                                <b class="p-1">GOAAAAALLLL!</b>
+                                            </div>
+                                            </div>
+                                        </div>    
+                                        @endif      
+                                      @foreach ($result->media_ids as $key => $media_id)
+                                        <span class=""><a href="//www.youtube.com/watch?v={{ $media_id }}" data-lity>Replay {{ $key+1 }}</a><br></span>
+                                      @endforeach                      
                                     {{ $result->match_date->diffForHumans() }}<br>
                                     @isset($result->match_data)
-                                    <button @click="show = !show">Insights</button>
+                                    <button @click="show = !show">Stats</button>
                                     @endisset
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">

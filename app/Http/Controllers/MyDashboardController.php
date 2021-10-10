@@ -13,14 +13,15 @@ class MyDashboardController extends Controller
         $user = auth()->user();
 
         // do a quick refresh on the results...
-        // Artisan::call('proclubsapi:matches n'); // if param 1 is 'y' then we show output
+        Artisan::call('proclubsapi:matches n'); // if param 1 is 'y' then we show output
         
         $data = [
             'results' => Result::getResults($user->properties),
             'myClubId' => (int)$user->properties['clubId']
         ];
 
-        $a = $data['results'][0];
+        $row = $data['results'][0];
+        // dd($row->media_ids);
         // dump($a->match_data[310718]->mom);
         // dump($a->properties);
         // dump($a->properties[]);   
