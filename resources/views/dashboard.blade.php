@@ -108,7 +108,7 @@
                                           </div>
                                         </div>
                                       </div>             
-                                      <p class="p-1"><a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>Click to View Highlights</a><br></p>
+                                      <p class="p-1"><a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>View Highlights</a><br></p>
                                       @endisset                       
                                     {{ $result->match_date->diffForHumans() }}<br>
                                     @isset($result->match_data)
