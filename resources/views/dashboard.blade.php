@@ -23,7 +23,7 @@
                 <h2 class="text-2xl font-semibold leading-tight">Matches</h2>
             </div>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                <div x-data="{ show: false }" class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                     <table class="min-w-full leading-normal">
                         <thead>
                             <tr>
@@ -102,7 +102,7 @@
                                       </div>             
                                       <p class="p-1"><a href="//www.youtube.com/watch?v={{$result->media}}" data-lity>Click to View Highlights</a><br></p>
                                       @endisset                       
-                                    {{ $result->match_date->diffForHumans() }}
+                                    {{ $result->match_date->diffForHumans() }}<br><button @click="show = !show">Insights</button>
                                 </td>
                                 <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                                     <p class="text-gray-900 whitespace-no-wrap text-center">
@@ -130,11 +130,14 @@
                                         </div>
                                     </div>
                                 </td>
-                            </tr>                              
-                            
+                            </tr>
+                            <tr>
+                                <td x-show="show" class="text-center text-xs" colspan="5">--data here--</td>
+                            </tr>
                         @endforeach
                         <tr>
-                            <td colspan="5"><div class="px-2 py-2 md:px-5 md:py-5 flex-1">{{ $results->links() }}</div></td>
+                            <td colspan="5">
+                                <div class="px-2 py-2 md:px-5 md:py-5 flex-1">{{ $results->links() }}</div></td>
                         </tr>
                         </tbody>
                     </table>

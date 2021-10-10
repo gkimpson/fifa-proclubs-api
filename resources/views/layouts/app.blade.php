@@ -16,7 +16,8 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.3.0/alpine.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
         <script src="{{ asset('js/lity.min.js') }}" defer></script>
     </head>
     <body class="font-sans antialiased">
@@ -28,6 +29,11 @@
                     {{ $header }}
                 </div>
             </header>
+
+            {{-- <div x-data="{ show: false }">
+                <button @click="show = !show">Show</button>
+                <h1 x-show="show">Hello Alpine.js</h1>
+            </div>             --}}
 
             <!-- Page Content -->
             <main>

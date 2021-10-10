@@ -49,10 +49,12 @@ class Result extends Model
                 'matchId' => $value['matchId'],
                 'timestamp' => $value['timestamp'],
                 'clubs' => self::getClubsData($value['clubs']),
-                'players' => self::getPlayerData($value['players'])
+                'players' => self::getPlayerData($value['players']),
+                'aggregate' => $value['aggregate'],
             ];
         }
 
+        // dd($results);
         return collect($results);
     }
 
@@ -145,7 +147,8 @@ class Result extends Model
                     'match_date' => $carbonDate->format('Y-m-d H:i:s'),
                     'properties' => json_encode([
                         'clubs' => $match['clubs'],
-                        'players' => $match['players']
+                        'players' => $match['players'],
+                        'aggregate' => $match['aggregate'], // aggregate is used for consistency as EA use the same naming convention - this is basically 'team stats' for that match
                     ]),
                     'platform' => $platform
                 ];
