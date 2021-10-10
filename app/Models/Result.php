@@ -21,6 +21,9 @@ class Result extends Model
     // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform', 'media'];
     protected $guarded = [];
     protected $appends = ['my_club_home_or_away', 'team_ids', 'home_team_crest_url', 'away_team_crest_url'];
+    protected $casts = [
+        'properties' => 'json'
+    ];
 
     public function getMatchDateAttribute($value) 
     {
@@ -32,6 +35,10 @@ class Result extends Model
         if (!$properties['clubId']) {
             abort(404, 'Missing clubId');
         }
+
+        if (!$properties['platform']) {
+            abort(404, 'Missing platform');
+        }        
         
         return Result::where('home_team_id', '=', $properties['clubId'])
                     ->orWhere('away_team_id', '=', $properties['clubId'])

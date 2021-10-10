@@ -20,6 +20,9 @@ class MyDashboardController extends Controller
             'myClubId' => (int)$user->properties['clubId']
         ];
 
+        $a = $data['results'][0];
+        dump($a->properties['aggregate']);   
+        // dump($data['results'][0]->toArray());
         return view('dashboard', $data);
     }
 
