@@ -26,7 +26,7 @@
                 <p class="p-1"><a href="//www.youtube.com/watch?v=M82Eua9wkQc" data-lity>GOAL OF THE MONTH</a><br></p>
             </div>
             <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
-                <div x-data="{ show: false }" class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+                <div x-data="{selected:null}" class="inline-block min-w-full shadow rounded-lg overflow-hidden">
                     <table class="min-w-full leading-normal">
                         <thead>
                             <tr>
@@ -59,15 +59,17 @@
                                 This is the first iteration.
                             @endif
                         
+
+
                             @if ($loop->last)
                                 This is the last iteration.
                             @endif --}}
-                            
+
                             <tr class="md:hidden">
                                 <td class="visible sm:table-cell bg-white text-sm"></td>
                                 <td class="visible sm:table-cell text-center bg-white text-xs text-gray-500" colspan="2">
                                     {{ $result->match_date->diffForHumans() }}<br>@isset($result->match_data)
-                                    <button @click="show = !show">
+                                    <button @click="selected !== {{ $loop->iteration }} ? selected = {{ $loop->iteration }} : selected = null">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
@@ -131,7 +133,7 @@
                                                   
                                     <div>{{ $result->match_date->diffForHumans() }}</div>
                                     @isset($result->match_data)
-                                    <button @click="show = !show">
+                                    <button @click="selected !== {{ $loop->iteration }} ? selected = {{ $loop->iteration }} : selected = null">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
@@ -168,7 +170,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td x-show="show" class="text-center text-xs" colspan="5">
+                                <td x-show="selected == {{ $loop->iteration }}" class="text-center text-xs" colspan="5">
                                     @isset($result->match_data)
                                     {{-- todo: need to use components for this.. --}}
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
