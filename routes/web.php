@@ -38,6 +38,10 @@ Route::prefix('22')->group(function () {
     Route::get('/squad/{platform}/{clubId}', 'App\Http\Controllers\StatsController@squad');
     Route::get('/squad/{platform}/{clubId}/ranking', 'App\Http\Controllers\StatsController@squadRanking');
     Route::get('/squad/{platform}/{clubId}/compare-players', 'App\Http\Controllers\StatsController@comparePlayers');
+    Route::get('/compare-clubs/{platform}/{clubId1}/{clubId2}', 'App\Http\Controllers\StatsController@compareClubs');
+    Route::get('/compare-clubs/{platform}/{clubId1}/{clubId2}/league', 'App\Http\Controllers\StatsController@compareClubsForm');
+    Route::get('/compare-clubs/{platform}/{clubId1}/{clubId2}/cup', 'App\Http\Controllers\StatsController@compareClubsForm');
+    Route::get('/compare-clubs/{platform}/{clubId1}/{clubId2}/squads', 'App\Http\Controllers\StatsController@compareSquads');
 });
 
 

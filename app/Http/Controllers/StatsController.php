@@ -306,6 +306,26 @@ class StatsController extends Controller
         dd('--matches ranking--', $match_type);          
     }      
 
+    public function compareClubs($platform, $clubId1, $clubId2)
+    {
+        dd('--compare clubs --', $clubId1, $clubId2);          
+    }        
+    
+    public function compareClubsForm($platform, $clubId1, $clubId2, $match_type)
+    {
+        if (!in_array($match_type, self::MATCH_TYPES)) {
+            abort(400, 'Incorrect match type');
+        }
+                
+        dd('--compare clubs form --', $clubId1, $clubId2, $match_type);          
+    }     
+
+    public function compareSquads($platform, $clubId1, $clubId2)
+    {
+        dd('--compare squads --', $clubId1, $clubId2);          
+    }
+    
+
     /** 
      * @deprecated
      */
