@@ -30,10 +30,14 @@ Route::group(['middleware' => 'auth'], function() {
 require __DIR__.'/auth.php';
 
 
+/** potentially make this open to all - would just be pulling data from the EA endpoint anyway... */
 Route::prefix('22')->group(function () {
-    Route::get('/club/{platform}/{clubId}/{matchType?}', 'App\Http\Controllers\ClubController@index');
+    Route::get('/club/{platform}/{clubId}/{matchType?}', 'App\Http\Controllers\StatsController@matches');
+    Route::get('/club/{platform}/{clubId}/{matchType?}/form', 'App\Http\Controllers\StatsController@matchesForm');
+    Route::get('/club/{platform}/{clubId}/{matchType?}/ranking', 'App\Http\Controllers\StatsController@matchesRanking');
     Route::get('/squad/{platform}/{clubId}', 'App\Http\Controllers\StatsController@squad');
-    Route::get('/squad/compare/{platform}/{clubId}', 'App\Http\Controllers\ClubController@compare');
+    Route::get('/squad/{platform}/{clubId}/ranking', 'App\Http\Controllers\StatsController@squadRanking');
+    Route::get('/squad/{platform}/{clubId}/compare-players', 'App\Http\Controllers\StatsController@comparePlayers');
 });
 
 

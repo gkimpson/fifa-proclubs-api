@@ -29,6 +29,11 @@ class StatsController extends Controller
         'matchType' => 'gameType9' // (gameType13 = cup, gameType9 = league)
     ];
 
+    const MATCH_TYPES = [
+        'gameType9' => 'league',
+        'gameType13' => 'cup'
+    ];
+
     public function index()
     {
         
@@ -175,7 +180,6 @@ class StatsController extends Controller
      */
     private function checkValidPlatform($platform = null)
     {
-
         if (!in_array($platform, self::PLATFORMS)) {
             abort(400, "{$platform} is an Invalid platform");
         }
@@ -244,13 +248,63 @@ class StatsController extends Controller
 
     public function squad($platform, $clubId, Request $request)
     {
-        $data = [];
-        $data[] = $this->careerStats($request);
-        $data[] = $this->memberStats($request);
+        $data =
+        [
+            'career' => $this->careerStats($request),
+            'member' => $this->memberStats($request),
+        ];
 
         dd($data);
     }
 
+    public function squadRanking($platform, $clubId, Request $request)
+    {
+        $data =
+        [
+            'career' => $this->careerStats($request),
+            'member' => $this->memberStats($request),
+        ];
+
+        dd($data);        
+    }
+
+    public function comparePlayers($platform, $clubId, Request $request)
+    {
+        $data =
+        [
+            'career' => $this->careerStats($request),
+            'member' => $this->memberStats($request),
+        ];
+
+        dd($data);        
+    }    
+
+    public function matches($platform, $clubId, $match_type)
+    {
+        if (!in_array($match_type, self::MATCH_TYPES)) {
+            abort(400, 'Incorrect match type');
+        }
+
+        dd('--matches--', $match_type);          
+    }
+
+    public function matchesForm($platform, $clubId, $match_type)
+    {
+        if (!in_array($match_type, self::MATCH_TYPES)) {
+            abort(400, 'Incorrect match type');
+        }
+
+        dd('--matches form--', $match_type);          
+    }    
+
+    public function matchesRanking($platform, $clubId, $match_type)
+    {
+        if (!in_array($match_type, self::MATCH_TYPES)) {
+            abort(400, 'Incorrect match type');
+        }
+
+        dd('--matches ranking--', $match_type);          
+    }      
 
     /** 
      * @deprecated
