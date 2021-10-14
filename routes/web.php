@@ -30,9 +30,9 @@ Route::group(['middleware' => 'auth'], function() {
 require __DIR__.'/auth.php';
 
 
-Route::prefix('fifa21')->group(function () {
+Route::prefix('22')->group(function () {
     Route::get('/club/{platform}/{clubId}/{matchType?}', 'App\Http\Controllers\ClubController@index');
-    Route::get('/squad/{platform}/{clubId}', 'App\Http\Controllers\ClubController@squad');
+    Route::get('/squad/{platform}/{clubId}', 'App\Http\Controllers\StatsController@squad');
     Route::get('/squad/compare/{platform}/{clubId}', 'App\Http\Controllers\ClubController@compare');
 });
 

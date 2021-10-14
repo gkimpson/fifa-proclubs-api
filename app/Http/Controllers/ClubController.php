@@ -8,6 +8,7 @@ class ClubController extends BaseController
 {
     public function index($platform, $clubId, $matchType = null)
     {
+        
         try {
             $matchType = ($matchType === 'league') ? 'gameType9' : 'gameType13';
 
@@ -47,7 +48,7 @@ class ClubController extends BaseController
         }
     }
 
-    public function squad()
+    public function squad($param1 = null, $param2 = null)
     {
         dd('squad');
     }

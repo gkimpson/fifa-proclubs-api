@@ -45,13 +45,17 @@ class StatsController extends Controller
         return $this->doExternalApiCall($endpoint, $params);
     }
 
-    public function careerStats(Request $request)
+    public function careerStats(Request $request, $cliParams = null)
     {           
         $endpoint = 'members/career/stats?';
         $params = [
             'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : self::MYCLUB_DEFAULTS['platform'],
             'clubId' => ($request->has('clubId')) ? $request->input('clubId') : self::MYCLUB_DEFAULTS['clubId']
         ]; 
+
+        if ($cliParams) {
+            $params = $cliParams;
+        }        
            
         return $this->doExternalApiCall($endpoint, $params);
     }
@@ -237,6 +241,15 @@ class StatsController extends Controller
         // dump($clubProperties);
         return $clubProperties;
     }    
+
+    public function squad($platform, $clubId, Request $request)
+    {
+        $data = [];
+        $data[] = $this->careerStats($request);
+        $data[] = $this->memberStats($request);
+
+        dd($data);
+    }
 
 
     /** 
