@@ -18,6 +18,7 @@
 
     <!-- todo Use proper layouts for this later -->
     <div class="container mx-auto px-4 sm:px-8">
+        
         <div class="py-8">
             <div>
                 <h2 class="text-2xl font-semibold leading-tight">Matches</h2>
@@ -170,7 +171,14 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td x-show="selected == {{ $loop->iteration }}" class="text-center text-xs" colspan="5">
+                                <td x-cloak x-show="selected == {{ $loop->iteration }}" 
+                                    {{-- x-transition:enter="transition ease-out origin-top-right duration-100"
+                                    x-transition:enter-start="opacity-0 transform scale-10"
+                                    x-transition:enter-end="opacity-100 transform scale-100" --}}
+                                    {{-- x-transition:leave="transition origin-top-center ease-in duration-100"
+                                    x-transition:leave-start="opacity-100 transform scale-10"
+                                    x-transition:leave-end="opacity-0 transform scale-100 ease-in"                                     --}}
+                                    class="text-center text-xs" colspan="5">
                                     @isset($result->match_data)
                                     {{-- todo: need to use components for this.. --}}
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
@@ -179,11 +187,11 @@
                                         <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->shots }}</div>
                                     </div>
 
-                                    {{-- <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
+                                    <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
                                         <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->saves }}</div>
-                                        <div class="text-center text-xs md:text-sm">Saves</div>
+                                        <div class="text-center text-xs md:text-sm">Saves (Human GK)</div>
                                         <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->saves }}</div>
-                                    </div>                                     --}}
+                                    </div>                                    
 
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
                                         <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->redcards }}</div>

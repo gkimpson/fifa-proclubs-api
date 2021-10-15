@@ -15,6 +15,18 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('club')" :active="request()->routeIs('club')">
+                        {{ __('Club') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('squad')" :active="request()->routeIs('squad')">
+                        {{ __('Squad') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('league')" :active="request()->routeIs('league')">
+                        {{ __('League') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('cup')" :active="request()->routeIs('cup')">
+                        {{ __('Cup') }}
+                    </x-nav-link>                          
                 </div>
             </div>
 
@@ -59,6 +71,51 @@
             </div>
         </div>
     </div>
+
+    @if(Route::is('cup') OR Route::is('cupform') OR Route::is('cuprank'))
+    <!-- Secondary Nav -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-6">
+            <div class="flex px-10">
+                <!-- Secondary Navigation Links for cup-->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('club')" :active="request()->routeIs('cup')">
+                        {{ __('Results') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('cupform')" :active="request()->routeIs('cupform')">
+                        {{ __('Form') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('cuprank')" :active="request()->routeIs('cuprank')">
+                        {{ __('Rank') }}
+                    </x-nav-link>                         
+                </div>
+            </div>
+        </div>
+    </div>        
+    @endif
+
+    @if(Route::is('league') OR Route::is('leagueform') OR Route::is('leaguerank'))
+    <!-- Secondary Nav -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-6">
+            <div class="flex px-10">
+                <!-- Secondary Navigation Links for league-->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('club')" :active="request()->routeIs('league')">
+                        {{ __('Results') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('leagueform')" :active="request()->routeIs('leagueform')">
+                        {{ __('Form') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('leaguerank')" :active="request()->routeIs('leaguerank')">
+                        {{ __('Rank') }}
+                    </x-nav-link>                         
+                </div>
+            </div>
+        </div>
+    </div>        
+    @endif    
+
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
