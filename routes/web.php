@@ -20,16 +20,11 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function() {
-    // Route::get('/dashboard', function () {
-    //     return view('dashboard');
-    // })->middleware(['auth'])->name('dashboard');
-
     Route::get('/dashboard', 'App\Http\Controllers\MyDashboardController@index')->middleware(['auth'])->name('dashboard'); 
     Route::get('/club', 'App\Http\Controllers\MyDashboardController@club')->middleware(['auth'])->name('club');
     Route::get('/squad', 'App\Http\Controllers\MyDashboardController@squad')->middleware(['auth'])->name('squad');
     Route::get('/league', 'App\Http\Controllers\MyDashboardController@league')->middleware(['auth'])->name('league');
     Route::get('/cup', 'App\Http\Controllers\MyDashboardController@cup')->middleware(['auth'])->name('cup');
-
     Route::get('/league/form', 'App\Http\Controllers\MyDashboardController@form')->middleware(['auth'])->name('leagueform');
     Route::get('/league/rank', 'App\Http\Controllers\MyDashboardController@rank')->middleware(['auth'])->name('leaguerank');
     Route::get('/cup/form', 'App\Http\Controllers\MyDashboardController@form')->middleware(['auth'])->name('cupform');
@@ -67,9 +62,9 @@ Route::get('/clubleaderboard', 'App\Http\Controllers\StatsController@clubLeaderb
 Route::get('/command', 'App\Http\Controllers\StatsController@runCommand');
 
 
+
+/** now redundant */
 Route::get('/overview', 'App\Http\Controllers\StatsController@overviewScrape');
-
-
 Route::get('/scrape', function() {
     $client = new Client();
     $client->setServerParameter('HTTP_USER_AGENT', 'Mozilla/5.0 (X11; Linux i686; rv:78.0) Gecko/20100101 Firefox/78.0');
