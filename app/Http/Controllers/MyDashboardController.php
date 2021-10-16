@@ -6,8 +6,9 @@ use App\Models\Result;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
-class MyDashboardController extends Controller
+class MyDashboardController extends BaseController
 {
+
     public function index()
     {
         $user = auth()->user();
@@ -26,32 +27,21 @@ class MyDashboardController extends Controller
     public function cup()
     {
         $user = auth()->user();
-        $data = [
-            'results' => Result::getResults($user->properties),
-            'myClubId' => (int)$user->properties['clubId']
-        ];        
-
+        $data = [];        
         return view('matches', $data);
     }
 
     public function league()
     {
         $user = auth()->user();
-        $data = [
-            'results' => Result::getResults($user->properties),
-            'myClubId' => (int)$user->properties['clubId']
-        ];        
-        
+        $data = [];        
         return view('matches', $data);
     }    
 
     public function squad()
     {
         $user = auth()->user();
-        $data = [
-            'myClubId' => (int)$user->properties['clubId']
-        ];
-        
+        $data = [];
         return view('squad', $data);
     }
 
@@ -73,20 +63,14 @@ class MyDashboardController extends Controller
     public function form()
     {
         $user = auth()->user();
-        $data = [
-            'myClubId' => (int)$user->properties['clubId']
-        ];
-        
+        $data = [];
         return view('form', $data);
     } 
     
     public function rank()
     {
         $user = auth()->user();
-        $data = [
-            'myClubId' => (int)$user->properties['clubId']
-        ];
-        
+        $data = [];
         return view('rank', $data);
     }     
 
