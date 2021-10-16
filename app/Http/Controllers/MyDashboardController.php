@@ -56,13 +56,18 @@ class MyDashboardController extends Controller
         return view('squad', $data);
     }
 
-    public function club()
+    public function club(Request $request)
     {
         $user = auth()->user();
+        $controller = new StatsController();
+
         $data = [
-            'myClubId' => (int)$user->properties['clubId']
+            'myClubId' => (int)$user->properties['clubId'],
+            'club' => $controller->clubsInfo($request),
+            'seasonStats' => $controller->seasonStats($request)
         ];
         
+        // dd($data);
         return view('club', $data);
     }       
 

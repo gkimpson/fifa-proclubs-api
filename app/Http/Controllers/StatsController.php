@@ -14,6 +14,7 @@ class StatsController extends Controller
 {
     public $apiUrl = 'https://proclubs.ea.com/api/fifa/';
     public $referer = 'https://www.ea.com/';
+    public $user;
     const PLATFORMS = [
         'xbox-series-xs',
         'xboxone',
@@ -34,6 +35,11 @@ class StatsController extends Controller
         'gameType13' => 'cup'
     ];
 
+    public function __construct()
+    {
+        $this->user = $user = auth()->user();
+    }
+
     public function index()
     {
         
@@ -43,8 +49,8 @@ class StatsController extends Controller
     {
         $endpoint = 'clubs/info?';
         $params = [
-            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : self::MYCLUB_DEFAULTS['platform'],
-            'clubIds' => ($request->has('clubIds')) ? $request->input('clubIds') : self::MYCLUB_DEFAULTS['clubId']
+            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : $this->user->properties['platform'],
+            'clubIds' => ($request->has('clubIds')) ? $request->input('clubIds') : $this->user->properties['clubId']
         ]; 
        
         return $this->doExternalApiCall($endpoint, $params);
@@ -69,8 +75,8 @@ class StatsController extends Controller
     {
         $endpoint = 'clubs/seasonalStats?';
         $params = [
-            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : self::MYCLUB_DEFAULTS['platform'],
-            'clubIds' => ($request->has('clubIds')) ? $request->input('clubIds') : self::MYCLUB_DEFAULTS['clubId']
+            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : $this->user->properties['platform'],
+            'clubIds' => ($request->has('clubIds')) ? $request->input('clubIds') : $this->user->properties['clubId']
         ];
 
         return $this->doExternalApiCall($endpoint, $params);        
@@ -80,8 +86,8 @@ class StatsController extends Controller
     {
         $endpoint = 'members/stats?';
         $params = [
-            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : self::MYCLUB_DEFAULTS['platform'],
-            'clubId' => ($request->has('clubId')) ? $request->input('clubId') : self::MYCLUB_DEFAULTS['clubId']
+            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : $this->user->properties['platform'],
+            'clubId' => ($request->has('clubId')) ? $request->input('clubId') : $this->user->properties['clubId']
         ];          
         return $this->doExternalApiCall($endpoint, $params);
     }
@@ -91,8 +97,8 @@ class StatsController extends Controller
         $endpoint = 'clubs/matches?';
         $params = [
             'matchType' => ($request->has('matchType')) ? $request->input('matchType') : self::MYCLUB_DEFAULTS['matchType'],
-            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : self::MYCLUB_DEFAULTS['platform'],
-            'clubIds' => ($request->has('clubIds')) ? $request->input('clubIds') : self::MYCLUB_DEFAULTS['clubId']
+            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : $this->user->properties['platform'],
+            'clubIds' => ($request->has('clubIds')) ? $request->input('clubIds') : $this->user->properties['clubId']
         ];
 
         if ($cliParams) {
@@ -106,7 +112,7 @@ class StatsController extends Controller
     {
         $endpoint = 'clubs/search?';
         $params = [
-            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : self::MYCLUB_DEFAULTS['platform'],    
+            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : $this->user->properties['platform'],
             'clubName' => ($request->has('clubName')) ? $request->input('clubName') : self::MYCLUB_DEFAULTS['clubName']
         ];
 
@@ -159,7 +165,7 @@ class StatsController extends Controller
     {
         $endpoint = 'seasonRankLeaderboard?';
         $params = [
-            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : self::MYCLUB_DEFAULTS['platform'],    
+            'platform' => ($request->has('platform')) ? $this->checkValidPlatform($request->input('platform')) : $this->user->properties['platform'],
         ];
 
         return $this->doExternalApiCall($endpoint, $params);          
