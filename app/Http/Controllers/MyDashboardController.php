@@ -11,7 +11,6 @@ class MyDashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
-
         // do a quick refresh on the results...
         // Artisan::call('proclubsapi:matches n'); // if param 1 is 'y' then we show output
         
@@ -67,7 +66,7 @@ class MyDashboardController extends Controller
             'seasonStats' => $controller->seasonStats($request)
         ];
         
-        // dd($data);
+        // dump($data);
         return view('club', $data);
     }       
 

@@ -44,4 +44,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'properties' => 'json'
     ];
+
+    protected $appends = ['emblem_id'];
+
+    public function getEmblemId()
+    {
+        $props = json_decode($this->attributes['properties']);
+        return $props->emblemId;
+    }
 }
