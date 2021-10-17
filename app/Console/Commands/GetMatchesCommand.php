@@ -80,6 +80,7 @@ class GetMatchesCommand extends Command
     
                 $response = $controller->matchStats($request, $params);
                 $results_2 = Result::formatData($response);
+                dump($results_1, $results_2);
                 $results = array_merge($results_1->toArray(), $results_2->toArray());
                 $total = count($results);
                 $this->info("Total matches found : {$total}");
