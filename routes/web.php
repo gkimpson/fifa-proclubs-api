@@ -46,6 +46,7 @@ Route::prefix('22')->group(function () {
     Route::get('/compare-clubs/{platform}/{clubId1}/{clubId2}/league', 'App\Http\Controllers\StatsController@compareClubsForm');
     Route::get('/compare-clubs/{platform}/{clubId1}/{clubId2}/cup', 'App\Http\Controllers\StatsController@compareClubsForm');
     Route::get('/compare-clubs/{platform}/{clubId1}/{clubId2}/squads', 'App\Http\Controllers\StatsController@compareSquads');
+    Route::get('/media/{platform}/{clubId}', 'App\Http\Controllers\StatsController@media');
 });
 
 
