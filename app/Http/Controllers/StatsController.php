@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Result;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -326,6 +327,15 @@ class StatsController extends Controller
         dd('--compare squads --', $clubId1, $clubId2);          
     }
     
+    public function media($platform, $clubId, Request $request)
+    {
+        $data =
+        [
+            'media' => Result::getMedia($platform, $clubId)
+        ];
+
+        dd($data);
+    }    
 
     /** 
      * @deprecated

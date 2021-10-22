@@ -17,7 +17,7 @@ class Result extends Model
 {
     use HasFactory;
 
-    CONST PAGINATION = 10;
+    CONST PAGINATION = 15;
 
     // protected $fillable = ['match_id', 'home_team_id', 'away_team_id', 'home_team_goals', 'away_team_goals', 'outcome', 'match_date', 'properties', 'platform', 'media'];
     protected $guarded = [];
@@ -279,6 +279,15 @@ class Result extends Model
             $youtubeIds = Str::of($csv)->explode(',');
         }
         return $youtubeIds;
+    }
+
+    static public function getMedia($platform, $clubId)
+    {
+        return Result::where('home_team_id', '=', $clubId)
+                    ->orWhere('away_team_id', '=', $clubId)
+                    ->whereNotNull('media')
+                    ->orderBy('match_date', 'desc')
+                    ->get();
     }
 
 }
