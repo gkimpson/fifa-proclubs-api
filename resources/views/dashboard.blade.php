@@ -101,7 +101,7 @@
                                         <div class="flex-shrink-0 w-10 h-10 hidden sm:table-cell">
                                             <img class="w-full h-full rounded-full"
                                                 src="{{$result->home_team_crest_url}}"
-                                                alt="Home Team Crest" />
+                                                alt="Crest" />
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-gray-900 whitespace-no-wrap">
@@ -165,7 +165,7 @@
                                         <div class="flex-shrink-0 w-10 h-10 hidden sm:table-cell">
                                             <img class="w-full h-full rounded-full"
                                                 src="{{$result->away_team_crest_url}}"
-                                                alt="Away Team Crest" />
+                                                alt="Crest" />
                                         </div>
                                     </div>
                                 </td>
