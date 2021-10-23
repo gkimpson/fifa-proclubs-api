@@ -11,6 +11,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "icanhazstring/symfony-console-spinner": "^1.0",
         "laravel/framework": "^8.54",
+        "laravel/telescope": "^4.6",
         "laravel/tinker": "^2.5",
         "rahul900day/laravel-console-spinner": "^1.0",
         "staudenmeir/eloquent-json-relations": "^1.1",
