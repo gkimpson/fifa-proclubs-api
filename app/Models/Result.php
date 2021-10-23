@@ -23,7 +23,7 @@ class Result extends Model
     protected $guarded = [];
     protected $appends = ['my_club_home_or_away', 'team_ids', 'home_team_crest_url', 'away_team_crest_url', 'match_data', 'media_ids'];
     protected $casts = [
-        // 'properties' => 'json'
+        'properties' => 'json'
     ];
 
     public function getMatchDateAttribute($value) 
@@ -153,11 +153,11 @@ class Result extends Model
                     'away_team_goals' => $clubs[1]['goals'],
                     'outcome' => self::getMatchOutcome($clubs[0]),
                     'match_date' => $carbonDate->format('Y-m-d H:i:s'),
-                    'properties' => json_encode([
+                    'properties' => [
                         'clubs' => $match['clubs'],
                         'players' => $match['players'],
                         'aggregate' => $match['aggregate'], // aggregate is used for consistency as EA use the same naming convention - this is basically 'team stats' for that match
-                    ]),
+                    ],
                     'platform' => $platform
                 ];
                 
@@ -312,6 +312,7 @@ class Result extends Model
                 ->orWhere('away_team_id', '=', $clubId);
          })
          ->whereNotNull('media')
+         ->orderBy('id', 'desc')
          ->paginate(5);
 
          $formatted = [];
