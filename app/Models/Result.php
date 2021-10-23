@@ -312,6 +312,7 @@ class Result extends Model
                 ->orWhere('away_team_id', '=', $clubId);
          })
          ->whereNotNull('media')
+         ->orderBy('id', 'desc')
          ->paginate(5);
 
          $formatted = [];
