@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Artisan;
 
 class MyDashboardController extends BaseController
 {
+    public function __construct()
+    {
+        
+        
+    }
 
     public function index()
     {
@@ -77,7 +82,15 @@ class MyDashboardController extends BaseController
     public function media()
     {
         $user = auth()->user();
-        $data = [];
+        $platform = $user->properties['platform'];
+        $clubId = $user->properties['clubId'];
+        $media = Result::getMedia($platform, $clubId);
+        
+        $data = [
+            'media' => $media['pagination'],
+            'formatted' => $media['formatted']
+        ];
+
         return view('media', $data);
     }         
 

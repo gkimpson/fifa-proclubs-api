@@ -201,6 +201,9 @@ class Result extends Model
         return $outcome;
     }
 
+    /**
+     * todo - return player attributes in a nicer human format
+     */
     private static function getProAttributes($attributes)
     {
         return $attributes;
@@ -241,6 +244,10 @@ class Result extends Model
         return $teams;
     }
 
+    /**
+     * get home team crest
+     * @return string
+     */
     public function getHomeTeamCrestUrlAttribute()
     {
         $teams = $this->getTeamIdsAttribute();
@@ -251,6 +258,10 @@ class Result extends Model
         return 'https://media.contentapi.ea.com/content/dam/ea/fifa/fifa-21/pro-clubs/common/pro-clubs/crest-default.png';   
     }
 
+    /**
+     * get away team crest
+     * @return string
+     */
     public function getAwayTeamCrestUrlAttribute()
     {
         $teams = $this->getTeamIdsAttribute();
@@ -261,6 +272,9 @@ class Result extends Model
         return 'https://media.contentapi.ea.com/content/dam/ea/fifa/fifa-21/pro-clubs/common/pro-clubs/crest-default.png';  
     }
 
+    /**
+     * gets aggregated match data (if available)
+     */
     public function getMatchDataAttribute()
     {
         $json = json_decode($this->attributes['properties']);
@@ -271,6 +285,9 @@ class Result extends Model
         return null;
     }
 
+    /**
+     * explodes media ids into array
+     */
     public function getMediaIdsAttribute()
     {
         $csv = $this->attributes['media'];
@@ -281,13 +298,30 @@ class Result extends Model
         return $youtubeIds;
     }
 
+    /**
+     * get media for club
+     * @param string $platform
+     * @param int $clubId
+     */
     static public function getMedia($platform, $clubId)
     {
-        return Result::where('home_team_id', '=', $clubId)
-                    ->orWhere('away_team_id', '=', $clubId)
-                    ->whereNotNull('media')
-                    ->orderBy('match_date', 'desc')
-                    ->get();
+        $data = [];
+        $data['pagination'] = Result::select('id', 'home_team_id', 'away_team_id', 'properties', 'media')
+                ->where(function($query) use ($clubId) {
+                $query->where('home_team_id', '=', $clubId)
+                ->orWhere('away_team_id', '=', $clubId);
+         })
+         ->whereNotNull('media')
+         ->paginate(5);
+
+         $formatted = [];
+         foreach($data['pagination'] as $row) {
+             $formatted[] = explode(',', $row->media);
+         }
+
+         $data['formatted'] = $formatted;
+        //  dd($data['formatted']);
+         return $data;
     }
 
 }
