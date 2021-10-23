@@ -74,4 +74,11 @@ class MyDashboardController extends BaseController
         return view('rank', $data);
     }     
 
+    public function media()
+    {
+        $user = auth()->user();
+        $data = [];
+        return view('media', $data);
+    }         
+
 }

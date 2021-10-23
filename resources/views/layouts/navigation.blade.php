@@ -27,7 +27,10 @@
                     </x-nav-link>
                     <x-nav-link :href="route('cup')" :active="request()->routeIs('cup')">
                         {{ __('Cup') }}
-                    </x-nav-link>                          
+                    </x-nav-link>
+                    <x-nav-link :href="route('media')" :active="request()->routeIs('media')">
+                        {{ __('Media') }}
+                    </x-nav-link>                        
                 </div>
             </div>
 
