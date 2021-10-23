@@ -67,7 +67,13 @@
                             @endif --}}
 
                             <tr class="md:hidden">
-                                <td class="visible sm:table-cell bg-white text-sm"></td>
+                                <td class="visible sm:table-cell bg-white text-sm">
+                                        <div class="">
+                                            <img class="w-full h-full rounded-full"
+                                                src="{{$result->home_team_crest_url}}"
+                                                alt="Crest" />
+                                        </div>
+                                </td>
                                 <td class="visible sm:table-cell text-center bg-white text-xs text-gray-500" colspan="2">
                                     {{ $result->match_date->diffForHumans() }}<br>@isset($result->match_data)
                                     <button @click="selected !== {{ $loop->iteration }} ? selected = {{ $loop->iteration }} : selected = null">
@@ -90,7 +96,13 @@
                                     </div>     
                                     @endif                                
                                 </td>
-                                <td class="visible sm:table-cell bg-white text-sm"></td>
+                                <td class="visible sm:table-cell bg-white text-sm">
+                                    <div class="">
+                                        <img class="w-full h-full rounded-full"
+                                            src="{{$result->away_team_crest_url}}"
+                                            alt="Crest" />
+                                    </div>                                    
+                                </td>
                             </tr>
                             <tr data-matchId="{{ $result->match_id }}">
                                 <td class="px-2 py-2 md:px-5 md:py-5 border-b border-gray-200 bg-white text-sm w-2/5 
