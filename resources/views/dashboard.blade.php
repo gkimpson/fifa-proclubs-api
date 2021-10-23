@@ -68,11 +68,11 @@
 
                             <tr class="md:hidden">
                                 <td class="visible sm:table-cell bg-white text-sm">
-                                        <div class="">
+                                    <div class="mx-5 px-3 py-3">
                                             <img class="w-full h-full rounded-full"
                                                 src="{{$result->home_team_crest_url}}"
                                                 alt="Crest" />
-                                        </div>
+                                    </div>
                                 </td>
                                 <td class="visible sm:table-cell text-center bg-white text-xs text-gray-500" colspan="2">
                                     {{ $result->match_date->diffForHumans() }}<br>@isset($result->match_data)
@@ -97,11 +97,11 @@
                                     @endif                                
                                 </td>
                                 <td class="visible sm:table-cell bg-white text-sm">
-                                    <div class="">
+                                    <div class="mx-5 px-3 py-3">
                                         <img class="w-full h-full rounded-full"
                                             src="{{$result->away_team_crest_url}}"
                                             alt="Crest" />
-                                    </div>                                    
+                                    </div>                                 
                                 </td>
                             </tr>
                             <tr data-matchId="{{ $result->match_id }}">
