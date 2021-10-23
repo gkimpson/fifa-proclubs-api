@@ -49,10 +49,10 @@ class GetMatchesCommand extends Command
             $results = [];
             $properties = User::pluck('properties')->unique();
 
-            $schedules = Schedule::upsert(
-                ['name' => 'proclubsapi-matches'],
-                ['properties' => json_decode($properties)]
-            );
+            // $schedules = Schedule::upsert(
+            //     ['name' => 'proclubsapi-matches'],
+            //     ['properties' => json_decode($properties)]
+            // );
 
             // $spinner = $this->spinner($properties->count());
             // $spinner->setMessage('Loading...');
