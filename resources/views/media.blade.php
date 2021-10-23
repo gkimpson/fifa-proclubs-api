@@ -6,7 +6,7 @@
                 {{-- -- add media content here -- --}}
                 {{ $media->links() }}
                 <div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10 py-10">
                         @foreach ($formatted as $key => $mediaItem)
                                 @foreach ($mediaItem as $item)
                                 <div class="mx-auto"><iframe src="https://www.youtube.com/embed/{{ $item }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>                                    

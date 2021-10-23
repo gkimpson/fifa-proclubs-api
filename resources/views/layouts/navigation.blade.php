@@ -129,7 +129,7 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('media')" :active="request()->routeIs('media')">
                 {{ __('Media') }}
-            </x-responsive-nav-link>            
+            </x-responsive-nav-link>         
         </div>
 
         <!-- Responsive Settings Options -->
