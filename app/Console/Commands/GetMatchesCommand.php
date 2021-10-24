@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\StatsController;
 use App\Models\Result;
+use App\Models\Club;
 use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -71,7 +72,7 @@ class GetMatchesCommand extends Command
                 ];
     
                 $response = $controller->matchStats($request, $params);
-                $results_1 = Result::formatData($response);
+                $results_1 = Result::formatData($response, $params);
                 $params = [
                     'matchType' => 'gameType9',
                     'platform' => $property['platform'],
@@ -79,7 +80,7 @@ class GetMatchesCommand extends Command
                 ];
     
                 $response = $controller->matchStats($request, $params);
-                $results_2 = Result::formatData($response);
+                $results_2 = Result::formatData($response, $params);
                 dump($results_1, $results_2);
                 $results = array_merge($results_1->toArray(), $results_2->toArray());
                 $total = count($results);

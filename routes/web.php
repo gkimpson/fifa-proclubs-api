@@ -63,6 +63,8 @@ Route::get('/seasonleaderboard', 'App\Http\Controllers\StatsController@seasonalL
 Route::get('/clubleaderboard', 'App\Http\Controllers\StatsController@clubLeaderboard');
 Route::get('/command', 'App\Http\Controllers\StatsController@runCommand');
 
+Route::get('/debug', 'App\Http\Controllers\StatsController@debug');
+
 
 
 /** now redundant */

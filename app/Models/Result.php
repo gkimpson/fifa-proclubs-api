@@ -47,7 +47,11 @@ class Result extends Model
                     ->paginate(SELF::PAGINATION);
     }
 
-    public static function formatData($data)
+    /**
+     * @param array $data
+     * @param array $params // matchType, platform, clubIds
+     */
+    public static function formatData($data, $params)
     {   
         $collection = collect($data);
         $results = [];
@@ -56,7 +60,7 @@ class Result extends Model
             $results[] = [
                 'matchId' => $value['matchId'],
                 'timestamp' => $value['timestamp'],
-                'clubs' => self::getClubsData($value['clubs']),
+                'clubs' => self::getClubsData($value['clubs'], $params),
                 'players' => self::getPlayerData($value['players']),
                 'aggregate' => $value['aggregate'],
             ];
@@ -66,13 +70,18 @@ class Result extends Model
         return collect($results);
     }
 
-    private static function getClubsData($clubs) 
+    private static function getClubsData($clubs, $params) 
     {
         $clubs = collect($clubs);
         $data = [];
 
         foreach($clubs as $clubId => $club) {
             $seasonId = isset($clubs[$clubId]['season_id']) ? $clubs[$clubId]['season_id'] : null;
+
+                // try to insert insert club (if this doesn't already exist)
+                if ($clubId == $params['clubIds']) {
+                    Club::insertUniqueClub($params, $club);
+                }
 
                 $data[] = [
                     'id' => $clubId,

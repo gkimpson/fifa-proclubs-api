@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Result;
+use App\Models\Club;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -336,6 +337,13 @@ class StatsController extends Controller
 
         dd($data);
     }    
+
+    public function debug()
+    {
+        // $platform = 'ps5';$clubId = 310718;
+        // $clubInserted = Club::insertUniqueClub($platform, $clubId);
+        // dd($clubInserted);
+    }
 
     /** 
      * @deprecated
