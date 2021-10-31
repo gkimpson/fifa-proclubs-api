@@ -17,54 +17,14 @@
 
 
 
-    {{-- <div
-    x-cloak x-data="{ 'showModal': false }"
-    @keydown.escape="showModal = false"
-  >
-      <!-- Trigger for Modal -->
-      <button type="button" @click="showModal = true">Open Modal</button>
-  
-      <!-- Modal -->
-      <div
-          class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
-          x-show="showModal"
-      >
-          <!-- Modal inner -->
-          <div
-              class="max-w-3xl px-6 py-4 mx-auto text-left bg-white rounded shadow-lg"
-              @click.away="showModal = false"
-              x-transition:enter="motion-safe:ease-out duration-300"
-              x-transition:enter-start="opacity-0 scale-90"
-              x-transition:enter-end="opacity-100 scale-100"
-          >
-              <!-- Title / Close-->
-              <div class="flex items-center justify-between">
-                  <h5 class="mr-3 text-black max-w-none">Title</h5>
-  
-                  <button type="button" class="z-50 cursor-pointer" @click="showModal = false">
-                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                      </svg>
-                  </button>
-              </div>
-  
-              <!-- content -->
-              <div>Content goes here</div>
-          </div>
-      </div>
-  </div> --}}
-  
-
-
-
-
-
-
     
 
     <!-- todo Use proper layouts for this later -->
-    <div class="container mx-auto px-4 sm:px-8">
-        <div class="py-8">
+    <div
+    class="container mx-auto px-4 sm:px-8">
+
+
+        <div class="py-8">            
             <div>
                 <h2 class="text-2xl font-semibold leading-tight">Matches</h2>
             </div>
@@ -163,7 +123,10 @@
                                 <td class="hidden md:table-cell border-b border-gray-200 bg-white text-xs text-center text-gray-500">
                                     @if (count($result->media_ids) > 0)
                                     <div class="flex flex-row">
-                                      @foreach ($result->media_ids as $key => $media_id)                                        
+                                      @foreach ($result->media_ids as $key => $media_id)  
+                                      
+                                      
+                                      
                                             <div><a href="//www.youtube.com/watch?v={{ $media_id }}" data-lity>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -173,6 +136,69 @@
                                       @endforeach
                                     </div>     
                                     @endif  
+
+                                      <!-- start of modal -->
+                                      <div
+                                      x-data="{ 'showModal': false }"
+                                      @keydown.escape="showModal = false"
+                                    >
+                                        <!-- Trigger for Modal -->
+                                        <button type="button" @click="showModal = true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                                            </svg>
+                                            </button>
+                                    
+                                        <!-- Modal -->
+                                        <div
+                                            class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
+                                            x-show="showModal"
+                                        >
+                                            <!-- Modal inner -->
+                                            <div
+                                                class="max-w-3xl px-6 py-4 mx-auto text-left bg-white rounded shadow-lg"
+                                                @click.away="showModal = false"
+                                                x-transition:enter="motion-safe:ease-out duration-300"
+                                                x-transition:enter-start="opacity-0 scale-90"
+                                                x-transition:enter-end="opacity-100 scale-100"
+                                            >
+                                                <!-- Title / Close-->
+                                                <div class="flex items-center justify-between">
+                                                    <h5 class="mr-3 text-black max-w-none">Add YouTube Highlight(s)</h5>
+                                    
+                                                    <button type="button" class="z-50 cursor-pointer" @click="showModal = false">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                    
+                                                <!-- content -->
+
+                                            <div class="max-w-lg mx-auto">
+                                                
+                                                <form>
+                                                    <div class="mb-6">
+                                                        <label for="email" class="text-sm font-medium text-gray-900 block mb-2">Your email</label>
+                                                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@flowbite.com" required="">
+                                                    </div>
+                                                    <div class="flex items-start mb-6">
+                                                        <div class="flex items-center h-5">
+                                                        <input id="remember" aria-describedby="remember" type="checkbox" class="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded" required="">
+                                                        </div>
+                                                        <div class="text-sm ml-3">
+                                                        <label for="remember" class="font-medium text-gray-900">Remember me</label>
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit</button>
+                                                </form>
+                                            </div>                                       
+
+
+                                            </div>
+                                        </div>
+                                      </div>  
+                                      <!-- end of modal -->                                      
                                                   
                                     <div>{{ $result->match_date->diffForHumans() }}</div>
                                     @isset($result->match_data)
