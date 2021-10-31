@@ -56,16 +56,6 @@
                         <tbody>
                             <div class="px-2 py-2 md:px-5 md:py-5 flex-1">{{ $results->links() }}</div>
                             @foreach ($results as $key => $result)
-                            {{-- @if ($loop->first)
-                                This is the first iteration.
-                            @endif
-                        
-
-
-                            @if ($loop->last)
-                                This is the last iteration.
-                            @endif --}}
-
                             <tr class="md:hidden">
                                 <td class="visible sm:table-cell bg-white text-sm">
                                     <div class="mx-5 px-3 py-3">
@@ -117,12 +107,7 @@
                                         </div>
                                         <div class="ml-3">
                                             <p class="text-gray-900 whitespace-no-wrap">
-                                                {{ $result->properties['clubs'][0]['name'] }}
-                                                @php 
-                                                    // $p = json_decode($result->properties);
-                                                    // print($p->clubs[0]->name);
-                                                    // todo: fix this later so there isn't a need to json_decode this in blade
-                                                @endphp                                                
+                                                {{ $result->properties['clubs'][0]['name'] }}                                             
                                             </p>
                                         </div>
                                     </div>
@@ -166,12 +151,7 @@
                                     <div class="flex items-center float-right">
                                         <div class="mr-3">
                                             <p class="text-gray-900 whitespace-no-wrap text-right">
-                                                {{ $result->properties['clubs'][1]['name'] }}
-                                                @php 
-                                                    // $p = json_decode($result->properties);
-                                                    // print($p->clubs[1]->name);
-                                                    // todo: fix this later so there isn't a need to json_decode this in blade
-                                                @endphp                                                    
+                                                {{ $result->properties['clubs'][1]['name'] }}                                                
                                             </p>
                                         </div>
                                         <div class="flex-shrink-0 w-10 h-10 hidden sm:table-cell">
@@ -182,17 +162,10 @@
                                     </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td x-cloak x-show="selected == {{ $loop->iteration }}" 
-                                    {{-- x-transition:enter="transition ease-out origin-top-right duration-100"
-                                    x-transition:enter-start="opacity-0 transform scale-10"
-                                    x-transition:enter-end="opacity-100 transform scale-100" --}}
-                                    {{-- x-transition:leave="transition origin-top-center ease-in duration-100"
-                                    x-transition:leave-start="opacity-100 transform scale-10"
-                                    x-transition:leave-end="opacity-0 transform scale-100 ease-in"                                     --}}
+                            <tr style="display: none;" x-show="selected == {{ $loop->iteration }}">
+                                <td
                                     class="text-center text-xs" colspan="5">
                                     @isset($result->match_data)
-                                    {{-- todo: need to use components for this.. --}}
                                     <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
                                         <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->home_team_id]->shots }}</div>
                                         <div class="text-center text-xs md:text-sm">Shots on Target</div>
