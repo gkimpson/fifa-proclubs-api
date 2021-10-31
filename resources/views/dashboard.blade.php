@@ -17,7 +17,7 @@
 
 
 
-    <div
+    {{-- <div
     x-cloak x-data="{ 'showModal': false }"
     @keydown.escape="showModal = false"
   >
@@ -52,7 +52,7 @@
               <div>Content goes here</div>
           </div>
       </div>
-  </div>
+  </div> --}}
   
 
 
