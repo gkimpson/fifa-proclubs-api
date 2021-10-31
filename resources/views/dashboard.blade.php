@@ -89,7 +89,74 @@
                                             </div>                                     
                                       @endforeach
                                     </div>     
-                                    @endif                                
+                                    @endif                    
+
+                                      <!-- start of modal -->
+                                      <div
+                                      x-data="{ 'showModal': false }"
+                                      @keydown.escape="showModal = false"
+                                    >
+                                        <!-- Trigger for Modal -->
+                                        <button type="button" @click="showModal = true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m-9 1V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                                            </svg>
+                                            </button>
+                                    
+                                        <!-- Modal -->
+                                        <div style="display: none;"
+                                            class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
+                                            x-show="showModal"
+                                        >
+                                            <!-- Modal inner -->
+                                            <div
+                                                class="max-w-3xl px-6 py-4 mx-auto text-left bg-white rounded shadow-lg"
+                                                @click.away="showModal = false"
+                                                x-transition:enter="motion-safe:ease-out duration-300"
+                                                x-transition:enter-start="opacity-0 scale-90"
+                                                x-transition:enter-end="opacity-100 scale-100"
+                                            >
+                                                <!-- Title / Close-->
+                                                <div class="flex items-center justify-between">
+                                                    <h5 class="mr-3 text-black max-w-none">Add YouTube Highlight(s)</h5>
+                                    
+                                                    <button type="button" class="z-50 cursor-pointer" @click="showModal = false">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                    
+                                                <!-- content -->
+                                                {{-- <form class="highlightsForm">
+                                                    <input type="hidden" name="matchId" value="{{ $result->match_id }}">
+                                                    @csrf
+                                                    <div class="mb-6">
+                                                      <label for="youtube" class="text-sm font-medium text-gray-900 block mb-2">Youtube URL</label>
+                                                      <input type="text" name="youtube" id="youtube" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="https://www.youtube.com/watch?v=" required>
+                                                    </div>
+                                                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit</button>
+                                                </form>                                    --}}
+
+
+                                                <form class="w-64 mx-auto" x-data="contactForm({{ $result->match_id }})" @submit.prevent="submitData">
+                                                    @csrf
+                                                    <div class="mb-4">
+                                                        {{-- {{ $result->match_id }} --}}
+                                                      <label class="block mb-2">Youtube URL:</label>
+                                                      <input type="text" class="border w-full p-1" x-model="formData.youtubeURL" placeholder="www.youtube.com/watch?v=xxxxxxx" required>
+                                                    </div>
+                                                    <button @click="showModal = false" class="bg-gray-700 hover:bg-gray-800 disabled:opacity-50 text-white w-full p-2 mb-4" x-text="buttonLabel"
+                                                      :disabled="loading"></button>
+                                                      {{-- <div x-text="JSON.stringify(formData)"> --}}
+                                                    {{-- <p x-text="message"></p> --}}
+                                                  </form>                                                
+
+                                            </div>
+                                        </div>
+                                      </div>  
+                                      <!-- end of modal -->   
+                                                                          
                                 </td>
                                 <td class="visible sm:table-cell bg-white text-sm">
                                     <div class="mx-5 px-3 py-3">
