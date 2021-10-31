@@ -26,6 +26,7 @@ class MyDashboardController extends BaseController
         ];
 
         // $row = $data['results'][0];
+        // dd($row);
         // dd($data['myClubId']);
         // dump($data['results'][0]->properties['clubs'][0]['name']);
         return view('dashboard', $data);

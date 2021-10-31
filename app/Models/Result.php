@@ -304,6 +304,11 @@ class Result extends Model
         if (!empty($csv)) {
             $youtubeIds = Str::of($csv)->explode(',');
         }
+
+        if (is_object($youtubeIds)) {
+            $youtubeIds = array_filter($youtubeIds->toArray());
+        }
+        
         return $youtubeIds;
     }
 
@@ -330,7 +335,7 @@ class Result extends Model
          }
 
          $data['formatted'] = $formatted;
-        //  dd($data['formatted']);
+
          return $data;
     }
 

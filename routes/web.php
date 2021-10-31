@@ -65,6 +65,8 @@ Route::get('/command', 'App\Http\Controllers\StatsController@runCommand');
 
 Route::get('/debug', 'App\Http\Controllers\StatsController@debug');
 
+Route::post('highlights', 'App\Http\Controllers\StatsController@highlights');
+
 
 
 /** now redundant */

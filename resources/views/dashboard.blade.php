@@ -124,9 +124,6 @@
                                     @if (count($result->media_ids) > 0)
                                     <div class="flex flex-row">
                                       @foreach ($result->media_ids as $key => $media_id)  
-                                      
-                                      
-                                      
                                             <div><a href="//www.youtube.com/watch?v={{ $media_id }}" data-lity>
                                             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -150,7 +147,7 @@
                                             </button>
                                     
                                         <!-- Modal -->
-                                        <div
+                                        <div style="display: none;"
                                             class="fixed inset-0 z-30 flex items-center justify-center overflow-auto bg-black bg-opacity-50"
                                             x-show="showModal"
                                         >
@@ -174,26 +171,29 @@
                                                 </div>
                                     
                                                 <!-- content -->
-
-                                            <div class="max-w-lg mx-auto">
-                                                
-                                                <form>
+                                                {{-- <form class="highlightsForm">
+                                                    <input type="hidden" name="matchId" value="{{ $result->match_id }}">
+                                                    @csrf
                                                     <div class="mb-6">
-                                                        <label for="email" class="text-sm font-medium text-gray-900 block mb-2">Your email</label>
-                                                        <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="name@flowbite.com" required="">
-                                                    </div>
-                                                    <div class="flex items-start mb-6">
-                                                        <div class="flex items-center h-5">
-                                                        <input id="remember" aria-describedby="remember" type="checkbox" class="bg-gray-50 border-gray-300 focus:ring-3 focus:ring-blue-300 h-4 w-4 rounded" required="">
-                                                        </div>
-                                                        <div class="text-sm ml-3">
-                                                        <label for="remember" class="font-medium text-gray-900">Remember me</label>
-                                                        </div>
+                                                      <label for="youtube" class="text-sm font-medium text-gray-900 block mb-2">Youtube URL</label>
+                                                      <input type="text" name="youtube" id="youtube" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="https://www.youtube.com/watch?v=" required>
                                                     </div>
                                                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit</button>
-                                                </form>
-                                            </div>                                       
+                                                </form>                                    --}}
 
+
+                                                <form class="w-64 mx-auto" x-data="contactForm({{ $result->match_id }})" @submit.prevent="submitData">
+                                                    @csrf
+                                                    <div class="mb-4">
+                                                        {{-- {{ $result->match_id }} --}}
+                                                      <label class="block mb-2">Youtube URL:</label>
+                                                      <input type="text" class="border w-full p-1" x-model="formData.youtubeURL" placeholder="www.youtube.com/watch?v=xxxxxxx" required>
+                                                    </div>
+                                                    <button @click="showModal = false" class="bg-gray-700 hover:bg-gray-800 disabled:opacity-50 text-white w-full p-2 mb-4" x-text="buttonLabel"
+                                                      :disabled="loading"></button>
+                                                      {{-- <div x-text="JSON.stringify(formData)"> --}}
+                                                    {{-- <p x-text="message"></p> --}}
+                                                  </form>                                                
 
                                             </div>
                                         </div>
@@ -305,4 +305,48 @@
         </div>
     </div>
 
+    <script>
+        function contactForm(matchId) {
+          return {
+            formData: {
+              youtubeURL: '',
+              matchId: matchId
+            },
+            message: '',
+            loading: false,
+            buttonLabel: 'Submit',
+    
+            submitData() {
+              this.buttonLabel = 'Submitting...'
+              this.loading = true;
+              this.message = ''
+    
+              fetch('highlights', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                // body: JSON.stringify(this.formData)
+                body: JSON.stringify({
+                    _token:  "{{ csrf_token() }}",
+                    formData: this.formData
+                })                
+              })
+                .then(() => {
+                  this.message = 'Form sucessfully submitted!'
+                  this.formData.youtubeURL = '';
+                })
+                .catch(() => {
+                  this.message = 'Ooops! Something went wrong!'
+                })
+                .finally(() => {
+                  this.loading = false;
+                  this.buttonLabel = 'Submit'
+                  this.formData.youtubeURL = '';
+                })
+            }
+          }
+        }
+
+      </script>    
 </x-app-layout>

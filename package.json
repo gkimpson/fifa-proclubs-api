@@ -21,6 +21,7 @@
         "tailwindcss": "^2.0.2"
     },
     "dependencies": {
+        "@themesberg/flowbite": "^1.0.7",
         "modal-video": "^2.4.6"
     }
 }

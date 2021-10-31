@@ -10,7 +10,10 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Artisan;
 use App\Models\User;
 use Goutte\Client;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpClient\HttpClient;
+use Illuminate\Support\Str;
+
 
 class StatsController extends Controller
 {
@@ -343,6 +346,20 @@ class StatsController extends Controller
         // $platform = 'ps5';$clubId = 310718;
         // $clubInserted = Club::insertUniqueClub($platform, $clubId);
         // dd($clubInserted);
+    }
+
+    /**
+     * save youtube highlights for match
+     */
+    public function highlights(Request $request)
+    {
+        $matchId = $request->formData['matchId'];
+        $url = $request->formData['youtubeURL'];
+        $youtubeId = Str::remove('https://www.youtube.com/watch?v=', $url);
+        $result = Result::where('match_id', $matchId)->first();
+        $result->media .= $youtubeId .',';
+        $result->save();
+        // dd($result, $result->save());
     }
 
     /** 
