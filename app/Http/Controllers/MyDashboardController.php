@@ -25,7 +25,7 @@ class MyDashboardController extends BaseController
             'myClubId' => (int)$user->properties['clubId']
         ];
 
-        ray($data);
+        // ray($data);
 
         // $row = $data['results'][0];
         // dd($row);
