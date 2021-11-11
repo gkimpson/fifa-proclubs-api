@@ -53,21 +53,25 @@ class Result extends Model
      */
     public static function formatData($data, $params)
     {   
-        $collection = collect($data);
-        $results = [];
-
-        foreach ($collection as $key => $value) {
-            $results[] = [
-                'matchId' => $value['matchId'],
-                'timestamp' => $value['timestamp'],
-                'clubs' => self::getClubsData($value['clubs'], $params),
-                'players' => self::getPlayerData($value['players']),
-                'aggregate' => $value['aggregate'],
-            ];
+        try {
+            $collection = collect(json_decode($data));
+            $results = [];
+            
+            foreach ($collection as $key => $value) {
+                $results[] = [
+                    'matchId' => $value->matchId,
+                    'timestamp' => $value->timestamp,
+                    'clubs' => self::getClubsData($value->clubs, $params),
+                    'players' => self::getPlayerData($value->players),
+                    'aggregate' => $value->aggregate
+                ];
+            }
+            
+            return collect($results);
+        } catch (\Exception $e) {
+            // do some logging...
+            return false;
         }
-
-        // dd($results);
-        return collect($results);
     }
 
     private static function getClubsData($clubs, $params) 
@@ -76,8 +80,6 @@ class Result extends Model
         $data = [];
 
         foreach($clubs as $clubId => $club) {
-            $seasonId = isset($clubs[$clubId]['season_id']) ? $clubs[$clubId]['season_id'] : null;
-
                 // try to insert insert club (if this doesn't already exist)
                 if ($clubId == $params['clubIds']) {
                     Club::insertUniqueClub($params, $club);
@@ -85,17 +87,17 @@ class Result extends Model
 
                 $data[] = [
                     'id' => $clubId,
-                    'name' => isset($clubs[$clubId]['details']['name']) && (!empty($clubs[$clubId]['details']['name'])) ? $clubs[$clubId]['details']['name'] : 'TEAM DISBANDED',
-                    'goals' => $clubs[$clubId]['goals'],
-                    'goalsAgainst' => $clubs[$clubId]['goalsAgainst'],
-                    'seasonId' => $seasonId,
-                    'winnerByDnf' => $clubs[$clubId]['winnerByDnf'],
-                    'wins' => $clubs[$clubId]['wins'],
-                    'losses' => $clubs[$clubId]['losses'],
-                    'ties' => $clubs[$clubId]['ties'],
-                    'gameNumber' => $clubs[$clubId]['gameNumber'], 
-                    'result' => $clubs[$clubId]['result'], 
-                    'teamId' => isset($clubs[$clubId]['details']['teamId']) ? $clubs[$clubId]['details']['teamId'] : null,
+                    'name' => isset($club->details->name) ? $club->details->name : 'TEAM DISBANDED',
+                    'goals' => $club->goals,
+                    'goalsAgainst' => $club->goalsAgainst,
+                    'seasonId' => isset($club->seasonId) ? $club->seasonId : null,
+                    'winnerByDnf' => $club->winnerByDnf,
+                    'wins' => $club->wins,
+                    'losses' => $club->losses,
+                    'ties' => $club->ties,
+                    'gameNumber' => $club->gameNumber,
+                    'result' => $club->result,
+                    'teamId' => isset($club->details->teamId) ? $club->details->teamId : null,
                 ];
         }
 
@@ -110,30 +112,30 @@ class Result extends Model
             // loop through each player(s) for each club
             foreach ($players[$clubId] as $clubPlayer) {
                 $data[$clubId][] = [
-                    'assists' => $clubPlayer['assists'],
-                    'cleansheetsany' => $clubPlayer['cleansheetsany'],
-                    'cleansheetsdef' => $clubPlayer['cleansheetsdef'],
-                    'cleansheetsgk' => $clubPlayer['cleansheetsgk'],
-                    'goals' => $clubPlayer['goals'],
-                    'goalsconceded' => $clubPlayer['goalsconceded'],
-                    'losses' => $clubPlayer['losses'],
-                    'losses' => $clubPlayer['mom'],
-                    'passattempts' => $clubPlayer['passattempts'],
-                    'passesmade' => $clubPlayer['passesmade'],
-                    'pos' => $clubPlayer['pos'],
-                    'passesmade' => $clubPlayer['passesmade'],
-                    'realtimegame' => $clubPlayer['realtimegame'],
-                    'realtimeidle' => $clubPlayer['realtimeidle'],
-                    'redcards' => $clubPlayer['redcards'],
-                    'saves' => $clubPlayer['saves'],
-                    'SCORE' => $clubPlayer['SCORE'],
-                    'shots' => $clubPlayer['shots'],
-                    'tackleattempts' => $clubPlayer['tackleattempts'],
-                    'tacklesmade' => $clubPlayer['tacklesmade'],
-                    'vproattr' => self::getProAttributes($clubPlayer['vproattr']),
-                    'vprohackreason' => $clubPlayer['vprohackreason'],
-                    'wins' => $clubPlayer['wins'],
-                    'playername' => $clubPlayer['playername'],
+                    'assists' => $clubPlayer->assists,
+                    'cleansheetsany' => $clubPlayer->cleansheetsany,
+                    'cleansheetsdef' => $clubPlayer->cleansheetsdef,
+                    'cleansheetsgk' => $clubPlayer->cleansheetsgk,
+                    'goals' => $clubPlayer->goals,
+                    'goalsconceded' => $clubPlayer->goalsconceded,
+                    'losses' => $clubPlayer->losses,
+                    'losses' => $clubPlayer->mom,
+                    'passattempts' => $clubPlayer->passattempts,
+                    'passesmade' => $clubPlayer->passesmade,
+                    'pos' => $clubPlayer->pos,
+                    'passesmade' => $clubPlayer->passesmade,
+                    'realtimegame' => $clubPlayer->realtimegame,
+                    'realtimeidle' => $clubPlayer->realtimeidle,
+                    'redcards' => $clubPlayer->redcards,
+                    'saves' => $clubPlayer->saves,
+                    'SCORE' => $clubPlayer->SCORE,
+                    'shots' => $clubPlayer->shots,
+                    'tackleattempts' => $clubPlayer->tackleattempts,
+                    'tacklesmade' => $clubPlayer->tacklesmade,
+                    'vproattr' => self::getProAttributes($clubPlayer->vproattr),
+                    'vprohackreason' => $clubPlayer->vprohackreason,
+                    'wins' => $clubPlayer->wins,
+                    'playername' => $clubPlayer->playername,
                     'properties' => $clubPlayer
                 ];                
             }

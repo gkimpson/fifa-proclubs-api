@@ -49,24 +49,14 @@ class GetMatchesCommand extends Command
             $controller = new StatsController();
             $results = [];
             $properties = User::pluck('properties')->unique();
-
-            // $schedules = Schedule::upsert(
-            //     ['name' => 'proclubsapi-matches'],
-            //     ['properties' => json_decode($properties)]
-            // );
-
-            // $spinner = $this->spinner($properties->count());
-            // $spinner->setMessage('Loading...');
-            // $spinner->start();
-
-            $this->info("{$properties->count()} user clubId/platform combinations found");
-
+            $properties = $properties->toArray();
             $x = 0;
+            
             foreach ($properties as $property) {
                 $this->info("[{$x}] Collecting matches data for - {$property['platform']}/{$property['clubId']}");
                 
                 $params = [
-                    'matchType' => 'gameType13',
+                    'matchType' => 'gameType9',
                     'platform' => $property['platform'],
                     'clubIds' => $property['clubId'] 
                 ];
@@ -74,24 +64,20 @@ class GetMatchesCommand extends Command
                 $response = $controller->matchStats($request, $params);
                 $results_1 = Result::formatData($response, $params);
                 $params = [
-                    'matchType' => 'gameType9',
+                    'matchType' => 'gameType13',
                     'platform' => $property['platform'],
                     'clubIds' => $property['clubId']
                 ];
     
                 $response = $controller->matchStats($request, $params);
                 $results_2 = Result::formatData($response, $params);
-                dump($results_1, $results_2);
                 $results = array_merge($results_1->toArray(), $results_2->toArray());
                 $total = count($results);
                 $this->info("Total matches found : {$total}");
                 $inserted = Result::insertUniqueMatches($results, $property['platform'], $showOutput);
                 $this->info("{$inserted} unique results into the database");
-                // $spinner->advance();
                 $x++;
-            }                       
-            // 
-            // $spinner->finish();
+            }
             return 0;
         } catch (\Exception $e) {
             // do some logging...

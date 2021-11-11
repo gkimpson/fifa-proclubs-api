@@ -193,12 +193,6 @@ class StatsController extends Controller
         return $platform;
     }
 
-    private function doExternalApiCall($endpoint = null, $params = [])
-    {
-        $url = $this->apiUrl . $endpoint . http_build_query($params);
-        return Http::withHeaders(['Referer' => $this->referer])->get($url)->json();      
-    }
-
     public function runCommand()
     {   
         Artisan::call('matches:get');
@@ -362,10 +356,16 @@ class StatsController extends Controller
         // dd($result, $result->save());
     }
 
+    private function doExternalApiCallLaravel($endpoint = null, $params = [])
+    {
+        $url = $this->apiUrl . $endpoint . http_build_query($params);
+        return Http::withHeaders(['Referer' => $this->referer])->get($url)->json();      
+    }    
+
     /** 
      * @deprecated
      */
-    private function doCurl($endpoint = null, $params = [])
+    private function doExternalApiCall($endpoint = null, $params = [])
     {
         $url = $this->apiUrl . $endpoint . http_build_query($params);
 
@@ -387,6 +387,6 @@ class StatsController extends Controller
           $response = curl_exec($curl);
           
           curl_close($curl);
-          echo $response;
+          return $response;
     }
 }
