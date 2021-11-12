@@ -72,6 +72,9 @@ class GetMatchesCommand extends Command
                 $response = $controller->matchStats($request, $params);
                 $results_2 = Result::formatData($response, $params);
                 $results = array_merge($results_1->toArray(), $results_2->toArray());
+
+                if (count($results) == 0) { $this->info('No results'); }
+
                 $total = count($results);
                 $this->info("Total matches found : {$total}");
                 $inserted = Result::insertUniqueMatches($results, $property['platform'], $showOutput);
