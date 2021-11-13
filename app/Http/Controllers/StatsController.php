@@ -362,9 +362,6 @@ class StatsController extends Controller
         return Http::withHeaders(['Referer' => $this->referer])->get($url)->json();      
     }    
 
-    /** 
-     * @deprecated
-     */
     private function doExternalApiCall($endpoint = null, $params = [])
     {
         $url = $this->apiUrl . $endpoint . http_build_query($params);
@@ -382,13 +379,13 @@ class StatsController extends Controller
             CURLOPT_HTTPHEADER => array(
               'accept: application/json', 
               'Referer: https://www.ea.com/',
-              'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36',
             ),
           ));
           
           $response = curl_exec($curl);
-          
           curl_close($curl);
+
+          dump($response);
           return $response;
     }
 }
