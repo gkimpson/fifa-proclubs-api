@@ -381,6 +381,20 @@ class StatsController extends Controller
               'Referer: https://www.ea.com/',
             ),
           ));
+
+          if(curl_exec($curl) === false)
+          {
+              echo 'Curl error: ' . curl_error($curl);
+          }
+          else
+          {
+              echo 'Operation completed without any errors';
+          }          
+
+          if(curl_errno($curl))
+          {
+              echo 'Curl error: ' . curl_error($curl);
+          }          
           
           $response = curl_exec($curl);
           curl_close($curl);
