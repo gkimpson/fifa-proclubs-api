@@ -60,7 +60,7 @@ class MyDashboardController extends BaseController
         $data = [
             'myClubId' => (int)$user->properties['clubId'],
             'club' => $controller->clubsInfo($request),
-            'seasonStats' => $controller->seasonStats($request)
+            // 'seasonStats' => $controller->seasonStats($request)
         ];
         
         // dump($data);
