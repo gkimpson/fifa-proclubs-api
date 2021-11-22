@@ -374,7 +374,7 @@ class StatsController extends Controller
             // CURLOPT_MAXREDIRS => 5,
             CURLOPT_TIMEOUT => 10,
             CURLOPT_FOLLOWLOCATION => true,
-            // CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_2_0,
             // CURLOPT_CUSTOMREQUEST => 'GET',
             // CURLOPT_VERBOSE => false,
             CURLOPT_FAILONERROR => true,
