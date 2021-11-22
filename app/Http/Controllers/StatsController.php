@@ -405,5 +405,3 @@ class StatsController extends Controller
           return $response;
     }
 }
-
-app/Http/Controllers/StatsController.php -lines
