@@ -370,18 +370,18 @@ class StatsController extends Controller
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => 'gzip, deflate',
-            CURLOPT_MAXREDIRS => 5,
-            CURLOPT_TIMEOUT => 20,
+            CURLOPT_ENCODING => "gzip, deflate",
+            // CURLOPT_MAXREDIRS => 5,
+            CURLOPT_TIMEOUT => 29,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             // CURLOPT_CUSTOMREQUEST => 'GET',
             // CURLOPT_VERBOSE => false,
             CURLOPT_FAILONERROR => true,
             CURLOPT_HTTPHEADER => array(
-                'accept-language: en-US,en;q=0.9,pt-BR;q=0.8,pt;q=0.7',
-                'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 11_1_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36',
-              ),            
+                "accept-language: en-US,en;q=0.9,pt-BR;q=0.8,pt;q=0.7",
+                "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36",
+            ),
           ));
 
           if(curl_exec($curl) === false)
