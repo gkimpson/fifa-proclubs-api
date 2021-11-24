@@ -402,6 +402,7 @@ class StatsController extends Controller
           curl_close($curl);
 
           dump($response);
+          ray()->json($response);
           return $response;
     }
 }
