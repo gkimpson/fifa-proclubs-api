@@ -365,7 +365,7 @@ class StatsController extends Controller
     private function doExternalApiCall($endpoint = null, $params = [])
     {
         $url = $this->apiUrl . $endpoint . http_build_query($params);
-        dump($url);
+        ray($url);
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
@@ -400,8 +400,6 @@ class StatsController extends Controller
           
           $response = curl_exec($curl);
           curl_close($curl);
-
-          dump($response);
           ray()->json($response);
           return $response;
     }
