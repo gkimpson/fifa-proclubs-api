@@ -390,7 +390,7 @@ class StatsController extends Controller
           }
           else
           {
-              echo 'Operation completed without any errors';
+              echo "Operation completed without any errors\n";
           }          
 
           if(curl_errno($curl))
