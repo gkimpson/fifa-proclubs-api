@@ -16,6 +16,7 @@ class MyDashboardController extends BaseController
 
     public function index()
     {
+        ray()->showQueries();
         $user = auth()->user();
         // do a quick refresh on the results...
         // Artisan::call('proclubsapi:matches n'); // if param 1 is 'y' then we show output
@@ -26,7 +27,6 @@ class MyDashboardController extends BaseController
         ];
 
         // dd($row);
-        // dd($data['myClubId']);
         // dump($data['results'][0]->properties['clubs'][0]['name']);
         return view('dashboard', $data);
     }
