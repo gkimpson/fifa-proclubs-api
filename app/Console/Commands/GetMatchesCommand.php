@@ -45,6 +45,7 @@ class GetMatchesCommand extends Command
     public function handle(Request $request)
     {
         try {
+            ray()->measure();
             $showOutput = ($this->argument('output') === 'y') ? true : false;
             $controller = new StatsController();
             $results = [];
@@ -80,10 +81,12 @@ class GetMatchesCommand extends Command
                 $inserted = Result::insertUniqueMatches($results, $property['platform'], $showOutput);
                 $this->info("{$inserted} unique results into the database");
                 $x++;
+                ray()->measure();
             }
             return 0;
         } catch (\Exception $e) {
             // do some logging...
+            ray($e->getMessage());
             return false;
         }
     }
