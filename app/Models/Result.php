@@ -341,4 +341,106 @@ class Result extends Model
          return $data;
     }
 
+    /**
+     * get current W/D/L streak for club
+     * @clubId clubId integer
+     * @limit limit integer defaults to 30
+     * @return array
+     */
+    public function getCurrentStreak($clubId, $limit = 30)
+    {
+        $streaks = [
+            'W' => 0,
+            'L' => 0,
+            'D' => 0
+        ];
+
+        // get all results for this clubId order by most recent first
+        $results = Result::select(['id', 'home_team_id', 'away_team_id', 'outcome', 'properties', 'media'])
+                    ->where('home_team_id', '=', $clubId)
+                    ->orWhere('away_team_id', '=', $clubId)
+                    ->orderBy('match_date', 'desc')->limit($limit)->get()->toArray();
+
+        $outcomes = [];
+        foreach($results as $key => $result) {
+            if ($result['home_team_id'] === $clubId && $result['outcome'] === 'homewin' || $result['away_team_id'] === $clubId && $result['outcome'] === 'awaywin') {
+                $outcomes[] = 'W';
+            } elseif ($result['outcome'] === 'draw') {
+                $outcomes[] = 'D';
+            } elseif ($result['away_team_id'] === $clubId && $result['outcome'] === 'homewin' || $result['home_team_id'] === $clubId && $result['outcome'] ==='awaywin') {
+                $outcomes[] = 'L';
+            } else {
+                throw new \Exception('Unable to process match outcome should be a W, D or L', 1);
+            }
+        }   
+
+        $outcomes = array_reverse($outcomes);   // reverse the array.
+        $last = array_shift($outcomes);         // shift takes out the first element, but we reversed it, so it's last.  
+        $counter = 1;                           // current streak;
+        foreach ($outcomes as $result) {        // iterate the array (backwords, since reversed)
+            if ($result != $last) break;        // if streak breaks, break out of the loop
+            $counter++;                         // won't be reached if broken
+        }
+
+        return [
+            'streak' => $counter,
+            'type' => $last
+        ];
+    }
+
+    /**
+     * get the maximum streaks for a club (W, D and L)
+     * @clubId clubId integer
+     * @limit limit integer defaults to 20
+     * @return $maxStreaks array
+     */
+    public function getMaxStreaksByClubId($clubId, $limit = 10000)
+    {
+        if (!$clubId) {
+            throw new \Exception("ClubId required", 1);
+        }
+
+        $results = Result::select(['id', 'home_team_id', 'away_team_id', 'outcome', 'properties', 'media'])
+                    ->where('home_team_id', '=', $clubId)
+                    ->orWhere('away_team_id', '=', $clubId)
+                    ->orderBy('match_date', 'desc')->limit($limit)->get()->toArray();
+
+        $outcomes = [];
+
+        foreach($results as $key => $result) {
+            if ($result['home_team_id'] === $clubId && $result['outcome'] === 'homewin' || $result['away_team_id'] === $clubId && $result['outcome'] === 'awaywin') {
+                $outcomes[] = 'W';
+            } elseif ($result['outcome'] === 'draw') {
+                $outcomes[] = 'D';
+            } elseif ($result['away_team_id'] === $clubId && $result['outcome'] === 'homewin' || $result['home_team_id'] === $clubId && $result['outcome'] ==='awaywin') {
+                $outcomes[] = 'L';
+            } else {
+                throw new \Exception('Unable to process match outcome should be a W, D or L', 1);
+            }
+        }                    
+                    
+        $streaks = array();
+        $prev_value = array('value' => null, 'amount' => null);
+        foreach ($outcomes as $val) {
+            if ($prev_value['value'] != $val) {
+                unset($prev_value);
+                $prev_value = array('value' => $val, 'amount' => 0);
+                $streaks[] =& $prev_value;
+            }
+        
+            $prev_value['amount']++;
+        }
+
+        // get ALL consecutive streaks        
+        $collection = collect($streaks)->sortByDesc('amount', SORT_NATURAL);
+
+        $maxStreaks = collect([
+            'W' => optional($collection->firstWhere('value', 'W')),
+            'D' => optional($collection->firstWhere('value', 'D')),
+            'L' => optional($collection->firstWhere('value', 'L'))
+        ]);
+
+        return $maxStreaks;
+    }
+
 }
