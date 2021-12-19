@@ -347,13 +347,9 @@ class Result extends Model
      * @limit limit integer defaults to 30
      * @return array
      */
-    public function getCurrentStreak($clubId, $limit = 30)
+    static public function getCurrentStreak($clubId, $limit = 30)
     {
-        $streaks = [
-            'W' => 0,
-            'L' => 0,
-            'D' => 0
-        ];
+        $streaks = [ 'W' => 0, 'L' => 0, 'D' => 0 ];
 
         // get all results for this clubId order by most recent first
         $results = Result::select(['id', 'home_team_id', 'away_team_id', 'outcome', 'properties', 'media'])
@@ -363,18 +359,18 @@ class Result extends Model
 
         $outcomes = [];
         foreach($results as $key => $result) {
-            if ($result['home_team_id'] === $clubId && $result['outcome'] === 'homewin' || $result['away_team_id'] === $clubId && $result['outcome'] === 'awaywin') {
+            if ($result['home_team_id'] == $clubId && $result['outcome'] == 'homewin' || $result['away_team_id'] == $clubId && $result['outcome'] == 'awaywin') {
                 $outcomes[] = 'W';
-            } elseif ($result['outcome'] === 'draw') {
+            } elseif ($result['outcome'] == 'draw') {
                 $outcomes[] = 'D';
-            } elseif ($result['away_team_id'] === $clubId && $result['outcome'] === 'homewin' || $result['home_team_id'] === $clubId && $result['outcome'] ==='awaywin') {
+            } elseif ($result['away_team_id'] == $clubId && $result['outcome'] == 'homewin' || $result['home_team_id'] == $clubId && $result['outcome'] =='awaywin') {
                 $outcomes[] = 'L';
             } else {
                 throw new \Exception('Unable to process match outcome should be a W, D or L', 1);
             }
         }   
 
-        $outcomes = array_reverse($outcomes);   // reverse the array.
+        // $outcomes = array_reverse($outcomes);   // reverse the array.
         $last = array_shift($outcomes);         // shift takes out the first element, but we reversed it, so it's last.  
         $counter = 1;                           // current streak;
         foreach ($outcomes as $result) {        // iterate the array (backwords, since reversed)
@@ -394,7 +390,7 @@ class Result extends Model
      * @limit limit integer defaults to 20
      * @return $maxStreaks array
      */
-    public function getMaxStreaksByClubId($clubId, $limit = 10000)
+    static public function getMaxStreaksByClubId($clubId, $limit = 10000)
     {
         if (!$clubId) {
             throw new \Exception("ClubId required", 1);
@@ -408,11 +404,11 @@ class Result extends Model
         $outcomes = [];
 
         foreach($results as $key => $result) {
-            if ($result['home_team_id'] === $clubId && $result['outcome'] === 'homewin' || $result['away_team_id'] === $clubId && $result['outcome'] === 'awaywin') {
+            if ($result['home_team_id'] == $clubId && $result['outcome'] == 'homewin' || $result['away_team_id'] == $clubId && $result['outcome'] == 'awaywin') {
                 $outcomes[] = 'W';
-            } elseif ($result['outcome'] === 'draw') {
+            } elseif ($result['outcome'] == 'draw') {
                 $outcomes[] = 'D';
-            } elseif ($result['away_team_id'] === $clubId && $result['outcome'] === 'homewin' || $result['home_team_id'] === $clubId && $result['outcome'] ==='awaywin') {
+            } elseif ($result['away_team_id'] == $clubId && $result['outcome'] == 'homewin' || $result['home_team_id'] == $clubId && $result['outcome'] =='awaywin') {
                 $outcomes[] = 'L';
             } else {
                 throw new \Exception('Unable to process match outcome should be a W, D or L', 1);

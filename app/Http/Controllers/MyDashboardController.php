@@ -23,10 +23,14 @@ class MyDashboardController extends BaseController
         
         $data = [
             'results' => Result::getResults($user->properties),
-            'myClubId' => (int)$user->properties['clubId']
+            'myClubId' => (int)$user->properties['clubId'], 
+            'streaks' => [
+                'current' => Result::getCurrentStreak($user->properties['clubId']),
+                'max' => Result::getMaxStreaksByClubId($user->properties['clubId'])
+            ],
         ];
 
-        // dd($row);
+        // dd($data['streaks']['current']);
         // dump($data['results'][0]->properties['clubs'][0]['name']);
         return view('dashboard', $data);
     }

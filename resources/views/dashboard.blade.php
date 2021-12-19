@@ -60,6 +60,19 @@
                         </thead>
                         <tbody>
                             <div class="px-2 py-2 md:px-5 md:py-5 flex-1">{{ $results->links() }}</div>
+
+                            <div class="px-5 py-1">
+                                    Current Streak - {{ $streaks['current']['streak'] }}
+                                    @if ($streaks['current']['type'] === 'W') Wins @endif
+                                    @if ($streaks['current']['type'] === 'D') Draws @endif
+                                    @if ($streaks['current']['type'] === 'L') Losses @endif
+                            </div>
+                            <div class="px-5 py-1">
+                                Max Streaks - 
+                                Wins {{ $streaks['max']['W']['amount'] }} -- Losses {{ $streaks['max']['L']['amount'] }} -- Draws {{ $streaks['max']['D']['amount'] }}
+                        </div>                            
+                            
+
                             @foreach ($results as $key => $result)
                             <tr class="md:hidden">
                                 <td class="visible sm:table-cell bg-white text-sm">
