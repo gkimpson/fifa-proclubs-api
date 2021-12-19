@@ -337,9 +337,9 @@ class StatsController extends Controller
 
     public function debug()
     {
-        // $platform = 'ps5';$clubId = 310718;
-        // $clubInserted = Club::insertUniqueClub($platform, $clubId);
-        // dd($clubInserted);
+        $data['maxStreaks'] = Result::getMaxStreaksByClubId(310718);
+        $data['currentStreaks'] = Result::getCurrentStreak(310718);
+        dd($data);
     }
 
     /**
