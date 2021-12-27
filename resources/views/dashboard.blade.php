@@ -365,11 +365,11 @@
                                         <div class="text-center text-xs md:text-sm">{{ $result->match_data[$result->away_team_id]->passattempts }}</div>
                                     </div> 
 
-                                    <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
+                                    {{-- <div class="grid grid-cols-3 gap-4 w-100 md:w-1/2 mx-auto border-b py-2">
                                         <div class="text-center text-xs md:text-sm">{{ round(($result->match_data[$result->home_team_id]->passesmade / $result->match_data[$result->home_team_id]->passattempts) * 100) }}%</div>
                                         <div class="text-center text-xs md:text-sm">Pass Completion %</div>
                                         <div class="text-center text-xs md:text-sm">{{ round(($result->match_data[$result->away_team_id]->passesmade / $result->match_data[$result->away_team_id]->passattempts) * 100) }}%</div>
-                                    </div>                                                                       
+                                    </div>                                                                        --}}
                                     @endisset
                                 </td>
                             </tr>
