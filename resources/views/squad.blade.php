@@ -5,6 +5,7 @@
         <div class="container mx-auto px-4 sm:px-8">
         
                 -- add squad content here --
+                
 
         </div>
     </x-slot>

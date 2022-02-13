@@ -67,8 +67,6 @@ Route::get('/debug', 'App\Http\Controllers\StatsController@debug');
 
 Route::post('highlights', 'App\Http\Controllers\StatsController@highlights');
 
-
-
 /** now redundant */
 Route::get('/overview', 'App\Http\Controllers\StatsController@overviewScrape');
 Route::get('/scrape', function() {

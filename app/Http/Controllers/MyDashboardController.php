@@ -49,10 +49,17 @@ class MyDashboardController extends BaseController
         return view('matches', $data);
     }    
 
-    public function squad()
+    public function squad(Request $request)
     {
         $user = auth()->user();
-        $data = [];
+        $controller = new StatsController();
+
+        $data = [
+            'careerStats' => $controller->careerStats($request),
+            'seasonStats' => $controller->seasonStats($request)
+        ];
+        
+        dump($data);
         return view('squad', $data);
     }
 
@@ -63,11 +70,11 @@ class MyDashboardController extends BaseController
 
         $data = [
             'myClubId' => (int)$user->properties['clubId'],
-            // 'club' => $controller->clubsInfo($request),
-            // 'seasonStats' => $controller->seasonStats($request)
+            'club' => $controller->clubsInfo($request),
+            'seasonStats' => $controller->seasonStats($request)
         ];
         
-        // dump($data);
+        dump($data);
         return view('club', $data);
     }       
 
